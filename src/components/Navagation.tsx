@@ -33,9 +33,9 @@ function Navagation() {
       className="p-4 text-white flex flex-col gap-2 absolute top-20 right-4 items-end"
       variants={list}
     >
-      {btnList.map((name) => {
+      {btnList.map((name, i) => {
         return (
-          <motion.li variants={item}>
+          <motion.li variants={item} key={i}>
             <NavButton name={name} />
           </motion.li>
         );
