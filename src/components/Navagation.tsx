@@ -26,7 +26,7 @@ const item = {
 };
 
 function Navagation() {
-  const btnList: string[] = ["About", "Survey"];
+  const btnList: string[] = ["Home", "About", "Survey"];
 
   return (
     <motion.ul

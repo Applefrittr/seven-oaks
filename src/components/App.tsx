@@ -1,8 +1,9 @@
 import Navagation from "./Navagation";
-import About from "./About";
+import Hero from "./Hero";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Sidebar from "./Sidebar";
+import RouteSwitch from "./RouteSwitch";
 
 const variants = {
   open: {
@@ -22,8 +23,7 @@ const variants = {
 function App() {
   return (
     <section className="flex h-svh relative">
-      {/* ROUTS HERE */}
-      <About />
+      <RouteSwitch />
       <Sidebar />
     </section>
   );
