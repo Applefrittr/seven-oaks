@@ -21,16 +21,23 @@ function Hero() {
   }, []);
 
   return (
-    // <section className="flex-1 flex bg-fixed bg-[url('./assets/front-blue-door.jpg')] bg-no-repeat bg-cover">
     <section className="flex-1 flex bg-green-900 relative">
-      {/* <div className=" bg-slate-400 text-white rounded-md absolute top-5 left-5 p-4">
-        LOGO
-      </div> */}
       {imgArray.map((img, i) => (
         <Fragment key={i}>
           <HeroImg img={img} index={i} currIndex={currIndex} />
         </Fragment>
       ))}
+      <div className="absolute bg-black rounded-2xl bottom-4 left-1/2 right 1/2 -translate-x-2/4 w-20 h-8 flex gap-2 items-center justify-center">
+        {imgArray.map((img, i) => {
+          return (
+            <div
+              className={`${
+                currIndex === i ? "bg-white" : "bg-transparent"
+              }  w-3 h-3 rounded-full transition-all ease-in duration-[1000ms] border-white border-[1px]`}
+            ></div>
+          );
+        })}
+      </div>
     </section>
   );
 }
