@@ -34,7 +34,7 @@ function Nav2() {
 
   return (
     <motion.nav
-      className="w-[300px] absolute top-0 right-0 bottom-0"
+      className="w-[300px] absolute top-0 right-0 bottom-0 z-20"
       initial={false}
       animate={isOpen ? "open" : "closed"}
       variants={navigation}

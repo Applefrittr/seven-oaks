@@ -2,6 +2,7 @@ import { useState, useEffect, Fragment } from "react";
 import BlueFront from "../assets/front-blue-door.jpg";
 import RightFront from "../assets/right-pan-front.jpg";
 import WideFront from "../assets/wide-front.jpg";
+import Logo from "../assets/SO-logo.png";
 import HeroImg from "./HeroImg";
 
 const imgArray = [BlueFront, RightFront, WideFront];
@@ -21,7 +22,10 @@ function Hero() {
   }, []);
 
   return (
-    <section className="flex-1 flex bg-green-900 relative">
+    <section className="flex-1 flex relative">
+      <div className="absolute top-4 left-4 w-96 sm:w-[500px] sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 h-auto z-10">
+        <img src={Logo}></img>
+      </div>
       {imgArray.map((img, i) => (
         <Fragment key={i}>
           <HeroImg img={img} index={i} currIndex={currIndex} />
