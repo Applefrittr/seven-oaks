@@ -23,15 +23,16 @@ function Hero() {
 
   return (
     <section className="flex-1 flex relative">
-      <div className="absolute top-4 left-4 w-96 sm:w-[500px] sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 h-auto z-10">
+      <div className="absolute w-96 sm:w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto z-10">
         <img src={Logo}></img>
       </div>
+      <div className="absolute top-0 left-0 right-0 bottom-0 bg-white opacity-25 z-[5]"></div>
       {imgArray.map((img, i) => (
         <Fragment key={i}>
           <HeroImg img={img} index={i} currIndex={currIndex} />
         </Fragment>
       ))}
-      <div className="absolute bg-black rounded-2xl bottom-4 left-1/2 right 1/2 -translate-x-2/4 w-20 h-8 flex gap-2 items-center justify-center">
+      <div className="absolute bg-black rounded-2xl bottom-4 left-1/2 right 1/2 -translate-x-2/4 w-20 h-8 flex gap-2 items-center justify-center z-10">
         {imgArray.map((img, i) => {
           return (
             <div
