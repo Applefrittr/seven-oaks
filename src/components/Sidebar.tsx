@@ -13,10 +13,10 @@ const navigation = {
     clipPath: `rect(-5px 100% ${custom.height + 100}px 0px round 0px)`,
     transition: { type: "ease-in", duration: 0.75 },
   }),
-  closed: (custom: DimensionData) => ({
+  closed: {
     clipPath: `rect(10px ${300 - 15}px 50px ${300 - 65}px round 15px)`,
     transition: { type: "ease-out", delay: 0.2, duration: 0.75 },
-  }),
+  },
 };
 
 function Nav2() {

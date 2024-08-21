@@ -36,6 +36,7 @@ function Hero() {
         {imgArray.map((img, i) => {
           return (
             <div
+              key={img}
               className={`${
                 currIndex === i ? "bg-white" : "bg-transparent"
               }  w-3 h-3 rounded-full transition-all ease-in duration-[1000ms] border-white border-[1px]`}
