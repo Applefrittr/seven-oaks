@@ -19,18 +19,19 @@ const navigation = {
   },
 };
 
-function Nav2() {
+interface PopupState {
+  displaySurveyPopup: (arg: boolean) => void;
+}
+
+function Nav2({ displaySurveyPopup }: PopupState) {
   const [isOpen, setIsOpen] = useState(false);
   const { height, width } = useDimensions();
   const ref = useRef(null);
 
   const toggle = () => {
     setIsOpen((prev) => !prev);
+    displaySurveyPopup(false);
   };
-
-  useEffect(() => {
-    console.log(height);
-  }, [height]);
 
   return (
     <motion.nav
