@@ -4,7 +4,6 @@ import RightFront from "../assets/right-pan-front.jpg";
 import WideFront from "../assets/wide-front.jpg";
 import Logo from "../assets/SO-logo.png";
 import HeroImg from "./HeroImg";
-import { motion } from "framer-motion";
 
 const imgArray = [BlueFront, RightFront, WideFront];
 
