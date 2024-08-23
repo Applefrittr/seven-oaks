@@ -8,12 +8,7 @@ import { motion } from "framer-motion";
 
 const imgArray = [BlueFront, RightFront, WideFront];
 
-interface PopupState {
-  surveyPopup: boolean;
-  displaySurveyPopup: (arg: boolean) => void;
-}
-
-function Hero({ surveyPopup, displaySurveyPopup }: PopupState) {
+function Hero() {
   const [currIndex, setCurrIndex] = useState<number>(0);
 
   useEffect(() => {
@@ -23,9 +18,6 @@ function Hero({ surveyPopup, displaySurveyPopup }: PopupState) {
       });
     }, 10000);
 
-    setTimeout(() => {
-      displaySurveyPopup(true);
-    }, 1500);
     return () => {
       clearInterval(stepInterval);
     };
@@ -37,25 +29,6 @@ function Hero({ surveyPopup, displaySurveyPopup }: PopupState) {
         <img src={Logo}></img>
       </div>
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-white opacity-25 z-[5]"></div>
-      {surveyPopup && (
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="w-fit h-fit absolute top-4 right-20 z-10 flex items-center"
-        >
-          <div className=" rounded-lg bg-black p-4 text-white w-[105px] sm:w-fit">
-            <p>Please complete Welcome Survey</p>
-          </div>
-          <svg width="100px" height="70px">
-            <path
-              d="M 0 20 C 5 25, 75 20, 80 15 L 75 0 L 100 13 L 87 40 L 82 25 C 75 30, 10 52, 0 52 V 25"
-              stroke="black"
-              fill="black"
-            />
-          </svg>
-        </motion.section>
-      )}
       {imgArray.map((img, i) => (
         <Fragment key={i}>
           <HeroImg img={img} index={i} currIndex={currIndex} />

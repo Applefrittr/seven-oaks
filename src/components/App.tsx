@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import RouteSwitch from "./RouteSwitch";
+import WelcomePopup from "./WelcomePopup";
 
 function App() {
-  const [surveyPopup, setSurveyPopup] = useState<boolean>(false);
+  const [displayPopup, setDisplayPopup] = useState(false);
 
-  const displaySurveyPopup = (arg: boolean) => {
-    setSurveyPopup(arg);
-  };
+  useEffect(() => {
+    setTimeout(() => {
+      setDisplayPopup(true);
+    }, 1000);
+  }, []);
   return (
     <section className="flex h-lvh relative">
-      <RouteSwitch
-        surveyPopup={surveyPopup}
-        displaySurveyPopup={displaySurveyPopup}
-      />
-      <Sidebar displaySurveyPopup={displaySurveyPopup} />
+      <RouteSwitch />
+      <Sidebar />
+      {displayPopup && <WelcomePopup setDisplayPopup={setDisplayPopup} />}
     </section>
   );
 }

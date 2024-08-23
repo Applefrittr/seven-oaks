@@ -19,18 +19,13 @@ const navigation = {
   },
 };
 
-interface PopupState {
-  displaySurveyPopup: (arg: boolean) => void;
-}
-
-function Nav2({ displaySurveyPopup }: PopupState) {
+function Nav2() {
   const [isOpen, setIsOpen] = useState(false);
   const { height, width } = useDimensions();
   const ref = useRef(null);
 
   const toggle = () => {
     setIsOpen((prev) => !prev);
-    displaySurveyPopup(false);
   };
 
   return (
