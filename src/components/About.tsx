@@ -1,3 +1,5 @@
+//import AboutImg from "../assets/right-pan-front-stencil.jpg";
+
 function About() {
   return (
     <section className="flex flex-col flex-auto overflow-scroll">
@@ -44,7 +46,7 @@ function About() {
         <div className="flex justify-around flex-auto w-full flex-wrap p-8 gap-3">
           <div className="w-52 flex flex-col gap-3 items-center">
             <h3 className="font-bold">Remy</h3>
-            <img src="" className="bg-slate-500 w-32 h-32"></img>
+            <img src={null} className="bg-slate-500 w-32 h-32"></img>
             <p>
               Playful 1 1/2 year old Golden Retriever (95lbs), loves taking
               walks.
@@ -52,7 +54,7 @@ function About() {
           </div>
           <div className="w-52 flex flex-col gap-3 items-center">
             <h3 className="font-bold">Shakey</h3>
-            <img src="" className="bg-slate-500 w-32 h-32"></img>
+            <img src={null} className="bg-slate-500 w-32 h-32"></img>
             <p>
               10 year old Jack/Rat Russell Terrier (rescue) who is very
               territorial and needs time to adjust to new guests.

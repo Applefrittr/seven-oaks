@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import RouteSwitch from "./RouteSwitch";
 import WelcomePopup from "./WelcomePopup";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const [displayPopup, setDisplayPopup] = useState(false);
@@ -12,11 +13,13 @@ function App() {
     }, 1000);
   }, []);
   return (
-    <section className="flex h-lvh relative">
-      <RouteSwitch />
-      <Sidebar />
-      {displayPopup && <WelcomePopup setDisplayPopup={setDisplayPopup} />}
-    </section>
+    <BrowserRouter>
+      <section className="flex h-lvh relative">
+        <RouteSwitch />
+        <Sidebar />
+        {displayPopup && <WelcomePopup setDisplayPopup={setDisplayPopup} />}
+      </section>
+    </BrowserRouter>
   );
 }
 

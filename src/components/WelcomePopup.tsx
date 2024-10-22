@@ -15,7 +15,7 @@ function WelcomePopup({ setDisplayPopup }: props) {
     >
       <div className=" flex flex-col-reverse sm:flex-row m-6 sm:m-0">
         <div className="bg-white p-8 flex justify-center items-center">
-          <img src={Logo} className="w-56 h-auto" />
+          <img src={Logo.src} className="w-56 h-auto" />
         </div>
         <div className="p-4 bg-black text-white relative flex flex-col gap-1 items-center">
           <h1 className="self-center p-2 font-black">Welcome to Seven Oaks</h1>
