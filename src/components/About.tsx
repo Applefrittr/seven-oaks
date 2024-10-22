@@ -1,5 +1,3 @@
-import BG from "../assets/right-pan-front-stencil.jpg";
-
 function About() {
   return (
     <section className="flex flex-col flex-auto overflow-scroll">
