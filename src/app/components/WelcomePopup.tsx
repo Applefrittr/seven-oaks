@@ -5,10 +5,6 @@ import Logo from "../../../public/SO-logo.png";
 import { useState } from "react";
 import Link from "next/link";
 
-interface props {
-  setDisplayPopup: (x: boolean) => void;
-}
-
 function WelcomePopup() {
   const [display, setDisplay] = useState(true);
 
@@ -22,7 +18,11 @@ function WelcomePopup() {
         >
           <div className=" flex flex-col-reverse sm:flex-row m-6 sm:m-0">
             <div className="bg-white p-8 flex justify-center items-center">
-              <img src={Logo.src} className="w-56 h-auto" />
+              <img
+                src={Logo.src}
+                alt="Seven Oak Logo"
+                className="w-56 h-auto"
+              />
             </div>
             <div className="p-4 bg-black text-white relative flex flex-col gap-1 items-center">
               <h1 className="self-center p-2 font-black">

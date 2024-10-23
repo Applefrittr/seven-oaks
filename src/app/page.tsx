@@ -1,6 +1,5 @@
 import Image from "next/image";
 import HomeImages from "./components/HomeImages";
-import WelcomePopup from "./components/WelcomePopup";
 
 export default function Home() {
   return (
