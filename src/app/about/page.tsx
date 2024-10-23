@@ -1,9 +1,7 @@
-//import AboutImg from "../assets/right-pan-front-stencil.jpg";
-
-function About() {
+export default function About() {
   return (
-    <section className="flex flex-col flex-auto overflow-scroll">
-      <div className="p-10 sm:p-20 bg-[url('./assets/right-pan-front-stencil.jpg')] bg-cover bg-center flex">
+    <main className="flex flex-col flex-auto overflow-scroll">
+      <div className="p-10 sm:p-20 bg-[url('/right-pan-front-stencil.jpg')] bg-cover bg-center flex">
         <aside className="p-4 bg-[rgba(250,250,250,0.85)] max-w-96">
           About Seven Oaks
           <p>
@@ -46,7 +44,7 @@ function About() {
         <div className="flex justify-around flex-auto w-full flex-wrap p-8 gap-3">
           <div className="w-52 flex flex-col gap-3 items-center">
             <h3 className="font-bold">Remy</h3>
-            <img src={null} className="bg-slate-500 w-32 h-32"></img>
+            <img src={undefined} className="bg-slate-500 w-32 h-32"></img>
             <p>
               Playful 1 1/2 year old Golden Retriever (95lbs), loves taking
               walks.
@@ -54,7 +52,7 @@ function About() {
           </div>
           <div className="w-52 flex flex-col gap-3 items-center">
             <h3 className="font-bold">Shakey</h3>
-            <img src={null} className="bg-slate-500 w-32 h-32"></img>
+            <img src={undefined} className="bg-slate-500 w-32 h-32"></img>
             <p>
               10 year old Jack/Rat Russell Terrier (rescue) who is very
               territorial and needs time to adjust to new guests.
@@ -62,8 +60,6 @@ function About() {
           </div>
         </div>
       </div>
-    </section>
+    </main>
   );
 }
-
-export default About;

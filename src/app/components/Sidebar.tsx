@@ -1,6 +1,8 @@
+"use client";
+
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import useDimensions from "../useDimensions";
+import useDimensions from "../../lib/hooks/useDimensions";
 import Navagation from "./Navagation";
 import NavToggle from "./NavToggle";
 
@@ -30,7 +32,7 @@ function Nav2() {
 
   return (
     <motion.nav
-      className="w-[300px] absolute top-0 right-0 bottom-0 z-20"
+      className="w-[300px] fixed top-0 right-0 bottom-0 z-20"
       initial={false}
       animate={isOpen ? "open" : "closed"}
       variants={navigation}
