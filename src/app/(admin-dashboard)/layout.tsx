@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Sidebar from "./components/Sidebar";
-import WelcomePopup from "./components/WelcomePopup";
+import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "Seven Oaks",
+  title: "Seven Oaks - Admin Dashboard",
   description: "Luxury living in Arnaudville, LA",
 };
 
@@ -16,8 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased min-h-svh relative`}>
-        <Sidebar />
-        <WelcomePopup />
+        <h1>ADMIN DASHBOARD LAYOUT</h1>
         {children}
       </body>
     </html>

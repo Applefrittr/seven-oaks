@@ -1,5 +1,5 @@
-import Logo from "../../../public/SO-logo.png";
-import { dancingScript } from "../fonts";
+import Logo from "../../../../public/SO-logo.png";
+import { dancingScript } from "../../fonts";
 
 export default function Survey() {
   return (
