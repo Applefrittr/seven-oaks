@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased min-h-screen relative`}>
+      <body className={`antialiased min-h-svh relative`}>
         <Sidebar />
         <WelcomePopup />
         {children}
