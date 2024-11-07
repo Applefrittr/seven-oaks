@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Dancing_Script } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
 import WelcomePopup from "./components/WelcomePopup";
