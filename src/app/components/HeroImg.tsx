@@ -1,11 +1,11 @@
 import Image from "next/image";
 
-interface Img {
+type Img = {
   img: string;
   alt: string;
   index: number;
   currIndex: number;
-}
+};
 
 function HeroImg({ img, alt, index, currIndex }: Img) {
   return (

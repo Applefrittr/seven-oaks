@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-interface props {
+type NavButtonProps = {
   name: string;
-}
+};
 
-function NavButton({ name }: props) {
+function NavButton({ name }: NavButtonProps) {
   return (
     <Link
       href={name === "Home" ? "/" : `${name.toLowerCase()}`}

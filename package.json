@@ -6,19 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "populate": "node ./src/db/populateDB.mjs"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "framer-motion": "^11.11.9",
     "jose": "^5.9.6",
     "next": "15.0.0",
+    "pg": "^8.13.1",
     "react": "19.0.0-rc-5c56b873-20241107",
     "react-dom": "19.0.0-rc-5c56b873-20241107",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pg": "^8.11.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

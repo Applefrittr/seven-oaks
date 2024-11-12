@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
 import React from "react";
 
-interface PathProps {
+type PathProps = {
   variants: {
     open: { d?: string; opacity?: number };
     closed: { d?: string; opacity?: number };
   };
   transition: { duration: number };
   d?: string;
-}
+};
 
-const Path: React.FC<PathProps> = (props) => (
+const Path = (props: PathProps) => (
   <motion.path
     fill="transparent"
     strokeWidth="3"
@@ -20,11 +20,11 @@ const Path: React.FC<PathProps> = (props) => (
   />
 );
 
-interface propFunction {
+type NavTogglePropFn = {
   toggle: () => void;
-}
+};
 
-function NavToggle({ toggle }: propFunction) {
+function NavToggle({ toggle }: NavTogglePropFn) {
   return (
     <button onClick={toggle} className="absolute top-5 right-7">
       <svg width="23" height="23" viewBox="0 0 23 23">

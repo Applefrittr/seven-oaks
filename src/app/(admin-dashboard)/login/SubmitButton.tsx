@@ -2,11 +2,11 @@
 
 import { useFormStatus } from "react-dom";
 
-interface SubmitParams {
+type SubmitButtonParams = {
   text: string;
-}
+};
 
-export default function SubmitButton({ text }: SubmitParams) {
+export default function SubmitButton({ text }: SubmitButtonParams) {
   const { pending } = useFormStatus();
   return (
     <button disabled={pending} type="submit">

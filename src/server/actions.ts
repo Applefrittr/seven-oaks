@@ -1,14 +1,15 @@
 "use server";
 
-import { createSession, deleteSession, getSession } from "@/lib/session";
+import { getUser } from "@/db/queries";
+import { createSession, deleteSession, getSession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-const testUser = {
-  id: "1",
-  username: "apple",
-  password: "12345678",
-};
+// const testUser = {
+//   id: "1",
+//   username: "apple",
+//   password: "12345678",
+// };
 
 const loginSchema = z.object({
   username: z
@@ -43,15 +44,17 @@ export async function login(
       errors: result.error.flatten().fieldErrors,
     };
   }
-
   const { username, password } = result.data;
-  if (username !== testUser.username || password !== testUser.password) {
+
+  const results = await getUser(username);
+
+  if (results.length === 0 || password !== results[0].password) {
     return {
       errors: { username: ["Invalid username or password"] },
     };
   }
 
-  await createSession(testUser.id);
+  await createSession(results[0].id);
 
   redirect("/dashboard");
 }
