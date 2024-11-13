@@ -3,10 +3,9 @@ import LoginForm from "./LoginForm";
 
 export default function Login() {
   return (
-    <main>
-      <h2>Login forms</h2>
+    <section className="w-96">
       <LoginForm />
       {/* <CreateUserForm /> */}
-    </main>
+    </section>
   );
 }

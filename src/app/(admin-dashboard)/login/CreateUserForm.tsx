@@ -14,7 +14,7 @@ export default function CreateUserForm() {
       <input id="confirm-password" name="confirm-password" />
       <label htmlFor="email">email</label>
       <input type="email" id="email" name="email" />
-      <SubmitButton text={"create"} />
+      <SubmitButton>Create User</SubmitButton>
     </form>
   );
 }

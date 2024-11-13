@@ -13,8 +13,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased min-h-svh relative`}>
-        <h1>ADMIN DASHBOARD LAYOUT</h1>
+      <body
+        className={`antialiased h-svh relative flex justify-center items-center bg-cover bg-no-repeat bg-[url('/close-front-stencil.jpg')]`}
+      >
+        <div className="absolute top-0 bottom-0 left-0 right-0 -z-10 bg-[rgba(255,255,255,0.25)]" />
         {children}
       </body>
     </html>
