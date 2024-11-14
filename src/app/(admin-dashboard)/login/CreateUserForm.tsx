@@ -1,7 +1,5 @@
 "use client";
 
-import SubmitButton from "./SubmitButton";
-
 export default function CreateUserForm() {
   return (
     <form>
@@ -14,7 +12,6 @@ export default function CreateUserForm() {
       <input id="confirm-password" name="confirm-password" />
       <label htmlFor="email">email</label>
       <input type="email" id="email" name="email" />
-      <SubmitButton>Create User</SubmitButton>
     </form>
   );
 }

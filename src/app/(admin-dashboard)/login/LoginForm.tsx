@@ -1,15 +1,30 @@
 "use client";
 
-import { useActionState } from "react";
-import SubmitButton from "./SubmitButton";
 import { login } from "@/server/actions";
 import FormElement from "./FormElement";
+import { useState } from "react";
+
+type Errors = {
+  username?: string[] | undefined;
+  password?: string[] | undefined;
+};
 
 export default function LoginForm() {
-  const [loginState, loginAction] = useActionState(login, undefined);
+  const [errors, setErrors] = useState<Errors | null>(null);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const loginState = await login(formData);
+
+    if (loginState?.errors) {
+      setErrors(loginState.errors);
+    }
+  };
+
   return (
     <form
-      action={loginAction}
+      onSubmit={(event) => onSubmit(event)}
       className={`p-6 rounded-2xl bg-black text-white flex flex-col gap-6`}
     >
       <legend className={`text-center text-2xl`}>Admin Portal</legend>
@@ -21,9 +36,7 @@ export default function LoginForm() {
           className="text-black rounded p-1"
         />
       </FormElement>
-      {loginState?.errors?.username && (
-        <p className="text-red-600">{loginState.errors.username}</p>
-      )}
+      {errors?.username && <p className="text-red-600">{errors.username}</p>}
       <FormElement>
         <label htmlFor="password">Password</label>
         <input
@@ -33,10 +46,13 @@ export default function LoginForm() {
           className="text-black rounded p-1"
         />
       </FormElement>
-      {loginState?.errors?.password && (
-        <p className="text-red-600">{loginState.errors.password}</p>
-      )}
-      <SubmitButton>Sign In</SubmitButton>
+      {errors?.password && <p className="text-red-600">{errors.password}</p>}
+      <button
+        type="submit"
+        className={`px-4 py-1 rounded-md bg-slate-500 w-max`}
+      >
+        Sign In
+      </button>
     </form>
   );
 }

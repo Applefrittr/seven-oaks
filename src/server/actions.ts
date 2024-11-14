@@ -5,12 +5,6 @@ import { createSession, deleteSession, getSession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-// const testUser = {
-//   id: "1",
-//   username: "apple",
-//   password: "12345678",
-// };
-
 const loginSchema = z.object({
   username: z
     .string()
@@ -26,15 +20,15 @@ export async function returnSession() {
   return await getSession();
 }
 
-type actionState = {
-  errors: {
-    username?: string[] | undefined;
-    password?: string[] | undefined;
-  };
-};
+// type actionState = {
+//   errors: {
+//     username?: string[] | undefined;
+//     password?: string[] | undefined;
+//   };
+// };
 
 export async function login(
-  prevState: actionState | undefined,
+  // prevState: actionState | undefined,
   formData: FormData
 ) {
   const result = loginSchema.safeParse(Object.fromEntries(formData));

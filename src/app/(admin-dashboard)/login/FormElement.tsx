@@ -1,5 +1,5 @@
 type FormElementProps = {
-  children: React.ReactElement[];
+  children: React.ReactNode;
 };
 
 export default function FormElement({ children }: FormElementProps) {
