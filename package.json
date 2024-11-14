@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "populate": "node ./src/db/populateDB.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
