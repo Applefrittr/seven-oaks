@@ -1,5 +1,6 @@
 import Logo from "../../../../public/SO-logo-inverse.png";
 import { logout } from "@/server/actions";
+import Navigation from "@/app/components/Navigation";
 
 export default function Layout({
   children,
@@ -16,20 +17,17 @@ export default function Layout({
 
 function DashboardNav() {
   return (
-    <section className={`flex flex-col bg-black w-96 h-full`}>
+    <section className={`flex flex-col bg-black w-96 h-full items-center`}>
       <img
         src={Logo.src}
         alt="Seven Oak Logo"
         className={`w-52 h-auto mx-auto my-4`}
       />
-      {/* <h1
-        className={
-          "text-lg sm:text-4xl text-center px-5 font-serif font-bold text-white"
-        }
-      >
-        <i>Admin Portal</i>
-      </h1> */}
-      <div className={`flex-auto text-white`}>Nav Links</div>
+      <div className={`flex-auto text-white pt-16`}>
+        <Navigation
+          btnList={["Dashboard", "Reservations", "Codes", "Settings"]}
+        />
+      </div>
       <Logout />
     </section>
   );
@@ -37,7 +35,7 @@ function DashboardNav() {
 
 function Logout() {
   return (
-    <form action={logout} className={`mx-auto p-8`}>
+    <form action={logout} className={`p-8`}>
       <button
         type="submit"
         className={`px-4 py-1 rounded-md bg-slate-500 w-max text-white`}

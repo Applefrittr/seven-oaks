@@ -20,17 +20,7 @@ export async function returnSession() {
   return await getSession();
 }
 
-// type actionState = {
-//   errors: {
-//     username?: string[] | undefined;
-//     password?: string[] | undefined;
-//   };
-// };
-
-export async function login(
-  // prevState: actionState | undefined,
-  formData: FormData
-) {
+export async function login(formData: FormData) {
   const result = loginSchema.safeParse(Object.fromEntries(formData));
 
   if (!result.success) {

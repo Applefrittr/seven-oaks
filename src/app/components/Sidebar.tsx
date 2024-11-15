@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import useDimensions from "../../lib/hooks/useDimensions";
-import Navagation from "./Navagation";
+import Navigation from "./Navigation";
 import NavToggle from "./NavToggle";
 
 type DimensionData = {
@@ -41,7 +41,17 @@ function Nav2() {
     >
       <div className="w-full absolute top-0 right-0 bottom-0 bg-[rgba(0,0,0,0.85)]"></div>
       <NavToggle toggle={toggle} />
-      <Navagation />
+      <Navigation
+        btnList={["Home", "About", "Survey"]}
+        positioning={{
+          position: "absolute",
+          top: "top-20",
+          left: "",
+          bottom: "",
+          right: "right-4",
+          align: "items-end",
+        }}
+      />
     </motion.nav>
   );
 }

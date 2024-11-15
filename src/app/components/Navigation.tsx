@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import NavButton from "./NavButton";
 
@@ -25,12 +27,22 @@ const item = {
   open: { opacity: 1, y: 0 },
 };
 
-function Navagation() {
-  const btnList: string[] = ["Home", "About", "Survey"];
+type NavigationProps = {
+  btnList: string[];
+  positioning?: {
+    position: string;
+    top: string;
+    left: string;
+    bottom: string;
+    right: string;
+    align: string;
+  };
+};
 
+export default function Navigation({ btnList, positioning }: NavigationProps) {
   return (
     <motion.ul
-      className="p-4 text-white flex flex-col gap-2 absolute top-20 right-4 items-end"
+      className={`p-4 text-white flex flex-col gap-4 ${positioning?.position} ${positioning?.top} ${positioning?.left} ${positioning?.bottom} ${positioning?.right} ${positioning?.align}`}
       variants={list}
     >
       {btnList.map((name, i) => {
@@ -43,5 +55,3 @@ function Navagation() {
     </motion.ul>
   );
 }
-
-export default Navagation;
