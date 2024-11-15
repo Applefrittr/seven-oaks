@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "./server/session";
 
-const protectedRoutes = ["/dashboard"];
-const publicRoutes = ["/login"];
+const protectedRoutes = "/dashboard";
+const publicRoutes = "/login";
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
+
+  const isProtectedRoute = path.includes(protectedRoutes);
+  const isPublicRoute = path.includes(publicRoutes);
 
   const session = await getSession();
 
@@ -23,5 +24,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/dashboard"],
+  matcher: ["/login", "/dashboard/:path*"],
 };
