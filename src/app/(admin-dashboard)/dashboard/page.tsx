@@ -5,9 +5,7 @@ export default async function Dashboard() {
   const session = await returnSession();
   console.log(session);
   return (
-    <section
-      className={`flex-auto h-full bg-slate-100 flex flex-col gap-6 p-8 overflow-y-scroll`}
-    >
+    <section className={`flex-auto flex flex-col gap-6 p-8`}>
       <h1 className="font-extrabold text-xl">Dashboard</h1>
       <div className="flex gap-6">
         <DashboardContainer>

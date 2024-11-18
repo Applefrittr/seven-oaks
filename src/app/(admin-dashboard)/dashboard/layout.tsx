@@ -8,16 +8,18 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className={`flex justify-center items-center flex-auto h-full`}>
+    <div className={`flex justify-center items-center flex-auto h-full`}>
       <DashboardNav />
-      {children}
-    </main>
+      <main className={`h-full w-full bg-slate-100 overflow-y-hidden`}>
+        {children}
+      </main>
+    </div>
   );
 }
 
 function DashboardNav() {
   return (
-    <section className={`flex flex-col bg-black w-96 h-full items-center`}>
+    <nav className={`flex flex-col bg-black w-96 h-full items-center`}>
       <img
         src={Logo.src}
         alt="Seven Oak Logo"
@@ -29,7 +31,7 @@ function DashboardNav() {
         />
       </div>
       <Logout />
-    </section>
+    </nav>
   );
 }
 

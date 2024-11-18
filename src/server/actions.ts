@@ -2,8 +2,10 @@
 
 import { getUser } from "@/db/queries";
 import { createSession, deleteSession, getSession } from "@/server/session";
+import { getCodes, createNewCode } from "@/db/queries";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 const loginSchema = z.object({
   username: z
@@ -47,4 +49,14 @@ export async function logout() {
   await deleteSession();
 
   redirect("/login");
+}
+
+export async function displayCodes() {
+  return await getCodes();
+}
+
+export async function createCode() {
+  await createNewCode();
+  console.log("code created!");
+  revalidatePath("/dashboard/codes");
 }
