@@ -2,7 +2,7 @@
 
 import { getUser } from "@/db/queries";
 import { createSession, deleteSession, getSession } from "@/server/session";
-import { getCodes, createNewCode } from "@/db/queries";
+import { getCodes, createNewCode, createSurvey } from "@/db/queries";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -24,6 +24,7 @@ const surveySchema = z.object({
   number: z.string().min(1, { message: "Enter length of stay" }).trim(),
   diet: z.string().trim(),
   other: z.string().trim(),
+  beverage: z.string().trim(),
 });
 
 export async function returnSession() {
@@ -42,13 +43,13 @@ export async function login(formData: FormData) {
 
   const results = await getUser(username);
 
-  if (results.length === 0 || password !== results[0].password) {
+  if (results?.length === 0 || (results && password !== results[0].password)) {
     return {
       errors: { username: ["Invalid username or password"] },
     };
   }
 
-  await createSession(results[0].id);
+  await createSession(results && results[0].id);
 
   redirect("/dashboard");
 }
@@ -79,5 +80,15 @@ export async function submitSurvey(formData: FormData) {
     };
   }
 
-  return { msg: `survey submitted` };
+  const queryResult = await createSurvey(result.data);
+
+  console.log({ queryResult });
+
+  if (queryResult?.length === 0) {
+    return {
+      errors: { code: ["Survey code does not exits, please try again"] },
+    };
+  }
+
+  revalidatePath("/dashboard");
 }

@@ -13,7 +13,7 @@ export default async function Codes() {
     <section className={`flex-auto flex flex-col gap-6 p-8`}>
       <h1 className="font-extrabold text-xl">Codes</h1>
       <div className={`flex gap-4 flex-wrap`}>
-        {codes.map((code: codeFormat) => {
+        {codes?.map((code: codeFormat) => {
           return (
             <div
               key={code.id}
