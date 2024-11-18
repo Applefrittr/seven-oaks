@@ -1,5 +1,6 @@
 import Logo from "../../../../public/SO-logo.png";
 import { dancingScript } from "../../fonts";
+import SurveyForm from "./SurveyForm";
 
 export default function Survey() {
   return (
@@ -20,62 +21,7 @@ export default function Survey() {
             to all our patrons. Please fill out the form below in prepration to
             your visit.
           </p>
-          <form className="flex flex-col gap-2">
-            <label htmlFor="date" className="font-bold">
-              Date of arrival
-            </label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              className="text-black w-fit rounded p-1"
-            />
-            <label htmlFor="number" className="font-bold">
-              Length of stay
-            </label>
-            <input
-              type="number"
-              id="number"
-              min="1"
-              max="14"
-              step="1"
-              name="number"
-              className="text-black w-fit rounded p-1"
-            ></input>
-            <label htmlFor="beverage" className="font-bold">
-              Beverage Preference
-            </label>
-            <select
-              id="beverage"
-              name="beverage"
-              className="text-black w-fit rounded p-1"
-            >
-              <option value="Tea">Tea</option>
-              <option value="Coffee">Coffee</option>
-              <option value="None">None</option>
-            </select>
-            <label htmlFor="diet" className="font-bold">
-              Allergies and/or Dietary Specifications
-            </label>
-            <textarea
-              id="diet"
-              name="diet"
-              rows={5}
-              className="text-black rounded p-1"
-            ></textarea>
-            <label htmlFor="other" className="font-bold">
-              Any other requests and/or requirements
-            </label>
-            <textarea
-              id="other"
-              name="other"
-              rows={5}
-              className="text-black rounded p-1"
-            ></textarea>
-            <button className="bg-slate-500 rounded w-fit pl-2 pr-4 pt-1 pb-1 font-bold">
-              Submit
-            </button>
-          </form>
+          <SurveyForm />
         </div>
       </div>
     </main>

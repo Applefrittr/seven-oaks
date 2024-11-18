@@ -5,7 +5,7 @@ export default async function Dashboard() {
   const session = await returnSession();
   console.log(session);
   return (
-    <section className={`flex-auto flex flex-col gap-6 p-8`}>
+    <section className={`flex-auto flex flex-col gap-6 min-h-full`}>
       <h1 className="font-extrabold text-xl">Dashboard</h1>
       <div className="flex gap-6">
         <DashboardContainer>
@@ -29,7 +29,7 @@ export default async function Dashboard() {
           </DashboardContainer>
         </div>
       </div>
-      <div className={`flex-auto`}>
+      <div className={`flex-auto flex-col flex`}>
         <DashboardContainer
           header={"Upcoming Reservations"}
           customStyle={`h-full`}
@@ -54,7 +54,7 @@ function DashboardContainer({
 }: DashboardContainerProps) {
   return (
     <div
-      className={`flex-auto bg-white rounded-lg flex flex-col justify-between gap-8 max-h-max minmax p-8 ${customStyle}`}
+      className={`flex-auto bg-white rounded-lg flex flex-col justify-between gap-8 max-h-max p-8 ${customStyle}`}
     >
       {header && (
         <h2>

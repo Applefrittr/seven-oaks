@@ -18,7 +18,7 @@ export default async function Codes() {
             <div
               key={code.id}
               className={`flex gap-2 px-4 py-1 ${
-                code.assigned ? "bg-green-400" : "bg-red-400"
+                !code.assigned ? "bg-green-400" : "bg-red-400"
               } rounded-md w-max`}
             >
               <div>

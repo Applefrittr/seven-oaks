@@ -10,7 +10,7 @@ export default function Layout({
   return (
     <div className={`flex justify-center items-center flex-auto h-full`}>
       <DashboardNav />
-      <main className={`h-full w-full bg-slate-100 overflow-y-hidden`}>
+      <main className={`h-full w-full bg-slate-100 p-8 overflow-y-scroll`}>
         {children}
       </main>
     </div>
