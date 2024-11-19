@@ -26,9 +26,7 @@ function DashboardNav() {
         className={`w-52 h-auto mx-auto my-4`}
       />
       <div className={`flex-auto text-white pt-16`}>
-        <Navigation
-          btnList={["Dashboard", "Reservations", "Codes", "Settings"]}
-        />
+        <Navigation btnList={["Dashboard", "Surveys", "Codes", "Settings"]} />
       </div>
       <Logout />
     </nav>

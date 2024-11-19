@@ -8,7 +8,8 @@ const labelStyles = "font-bold";
 type Errors = {
   code?: string[] | undefined;
   date?: string[] | undefined;
-  number?: string[] | undefined;
+  length?: string[] | undefined;
+  name?: string[] | undefined;
 };
 
 export default function SurveyForm() {
@@ -53,24 +54,29 @@ export default function SurveyForm() {
       </label>
       <input id="code" name="code" className={inputStyles} />
       {errors?.code && <p className="text-red-600">{errors.code}</p>}
+      <label htmlFor="name" className={labelStyles}>
+        Party Name
+      </label>
+      <input id="name" name="name" className={inputStyles} />
+      {errors?.name && <p className="text-red-600">{errors.code}</p>}
       <label htmlFor="date" className={labelStyles}>
         Date of arrival
       </label>
       <input type="date" id="date" name="date" className={inputStyles} />
       {errors?.date && <p className="text-red-600">{errors.date}</p>}
-      <label htmlFor="number" className={labelStyles}>
+      <label htmlFor="length" className={labelStyles}>
         Length of stay
       </label>
       <input
-        type="number"
-        id="number"
+        type="length"
+        id="length"
         min="1"
         max="14"
         step="1"
-        name="number"
+        name="length"
         className={inputStyles}
       />
-      {errors?.number && <p className="text-red-600">{errors.number}</p>}
+      {errors?.length && <p className="text-red-600">{errors.length}</p>}
       <label htmlFor="beverage" className={labelStyles}>
         Beverage Preference
       </label>

@@ -1,12 +1,8 @@
 import Link from "next/link";
 
-type NavButtonProps = {
-  name: string;
-};
-
 function createPath(name: string) {
   const publicPaths = ["home", "about", "survey"];
-  const privatePaths = ["dashboard", "reservations", "codes", "settings"];
+  const privatePaths = ["dashboard", "surveys", "codes", "settings"];
 
   if (publicPaths.indexOf(name.toLowerCase()) >= 0) {
     return name === "Home"
@@ -19,7 +15,7 @@ function createPath(name: string) {
   }
 }
 
-function NavButton({ name }: NavButtonProps) {
+function NavButton({ name }: { name: string }) {
   const path = createPath(name);
   return (
     <Link

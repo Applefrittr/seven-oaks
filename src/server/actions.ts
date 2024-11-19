@@ -1,6 +1,6 @@
 "use server";
 
-import { getUser } from "@/db/queries";
+import { getSurveys, getUser } from "@/db/queries";
 import { createSession, deleteSession, getSession } from "@/server/session";
 import { getCodes, createNewCode, createSurvey } from "@/db/queries";
 import { redirect } from "next/navigation";
@@ -20,8 +20,9 @@ const loginSchema = z.object({
 
 const surveySchema = z.object({
   code: z.string().min(5, { message: "Please enter valid survey code" }).trim(),
+  name: z.string().min(1, { message: "Enter party name" }).trim(),
   date: z.string().date(),
-  number: z.string().min(1, { message: "Enter length of stay" }).trim(),
+  length: z.string().min(1, { message: "Enter length of stay" }).trim(),
   diet: z.string().trim(),
   other: z.string().trim(),
   beverage: z.string().trim(),
@@ -91,4 +92,8 @@ export async function submitSurvey(formData: FormData) {
   }
 
   revalidatePath("/dashboard");
+}
+
+export async function displaySurveys() {
+  return await getSurveys();
 }

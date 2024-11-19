@@ -16,9 +16,10 @@ CREATE TABLE IF NOT EXISTS guest (
 CREATE TABLE IF NOT EXISTS guest_data (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   guest_id INTEGER REFERENCES guest,
-  arrival_date DATE,
-  stay_length INTEGER,
+  name VARCHAR ( 50 ),
+  date DATE,
+  length INTEGER,
   beverage VARCHAR ( 10 ),
-  text_1 TEXT,
-  text_2 TEXT  
+  diet TEXT,
+  other TEXT  
 );

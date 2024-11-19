@@ -1,21 +1,7 @@
 import { pool } from "./pool";
 import codeGenerator from "@/lib/codeGenerator";
 
-type User = {
-  username: string;
-  password: string;
-  email?: string | null;
-  phone?: number | null;
-};
-
-type SurveyData = {
-  number: string;
-  code: string;
-  date: string;
-  beverage: string;
-  diet: string;
-  other: string;
-};
+import { SurveyData, User } from "@/db/dataTypes";
 
 export async function createUser({
   username,
@@ -78,9 +64,10 @@ export async function createSurvey({
   code,
   date,
   diet,
-  number,
+  length,
   other,
   beverage,
+  name,
 }: SurveyData) {
   try {
     const { rows } = await pool.query(
@@ -94,10 +81,10 @@ export async function createSurvey({
     }
 
     await pool.query(
-      `INSERT INTO guest_data (guest_id, arrival_date, stay_length, beverage, diet, other)
-        VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO guest_data (guest_id, date, length, beverage, diet, other, name)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
         `,
-      [rows[0].id, date, number, beverage, diet, other]
+      [rows[0].id, date, length, beverage, diet, other, name]
     );
 
     await pool.query(
@@ -107,6 +94,20 @@ export async function createSurvey({
       `,
       [rows[0].id]
     );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getSurveys() {
+  try {
+    const { rows } = await pool.query(
+      `SELECT a.code, b.name, b.date, b.length, b.beverage, b.diet, b.other
+        FROM guest AS a JOIN guest_data AS b ON a.id = b.guest_id 
+      `
+    );
+    console.log(rows);
+    return rows;
   } catch (err) {
     console.log(err);
   }

@@ -1,19 +1,14 @@
 import { displayCodes, createCode } from "@/server/actions";
-
-type codeFormat = {
-  id: number;
-  code: string;
-  assigned: boolean;
-};
+import { SurveyCode } from "@/db/dataTypes";
 
 export default async function Codes() {
   const codes = await displayCodes();
   console.log(codes);
   return (
-    <section className={`flex-auto flex flex-col gap-6 p-8`}>
+    <section className={`flex-auto flex flex-col gap-6`}>
       <h1 className="font-extrabold text-xl">Codes</h1>
       <div className={`flex gap-4 flex-wrap`}>
-        {codes?.map((code: codeFormat) => {
+        {codes?.map((code: SurveyCode) => {
           return (
             <div
               key={code.id}
