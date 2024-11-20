@@ -99,11 +99,13 @@ export async function createSurvey({
   }
 }
 
-export async function getSurveys() {
+export async function getSurveys(param: string) {
   try {
     const { rows } = await pool.query(
-      `SELECT a.code, b.name, b.date, b.length, b.beverage, b.diet, b.other
-        FROM guest AS a JOIN guest_data AS b ON a.id = b.guest_id 
+      `SELECT a.code, b.name AS name, b.date AS date, b.length AS length, b.beverage, b.diet, b.other
+        FROM guest AS a 
+        JOIN guest_data AS b ON a.id = b.guest_id
+        ORDER BY ${param}
       `
     );
     console.log(rows);

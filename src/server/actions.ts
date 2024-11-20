@@ -94,6 +94,6 @@ export async function submitSurvey(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
-export async function displaySurveys() {
-  return await getSurveys();
+export async function displaySurveys(param = "name") {
+  return await getSurveys(param);
 }
