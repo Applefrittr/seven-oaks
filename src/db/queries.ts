@@ -99,7 +99,9 @@ export async function createSurvey({
   }
 }
 
-export async function getSurveys(param: string) {
+export async function getAllSurveys(
+  param: string
+): Promise<SurveyData[] | undefined> {
   try {
     const { rows } = await pool.query(
       `SELECT a.code, b.name AS name, b.date AS date, b.length AS length, b.beverage, b.diet, b.other
@@ -110,6 +112,23 @@ export async function getSurveys(param: string) {
     );
     console.log(rows);
     return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getSurvey(code: string): Promise<SurveyData | undefined> {
+  try {
+    const { rows } = await pool.query(
+      `SELECT a.code, b.name AS name, b.date AS date, b.length AS length, b.beverage, b.diet, b.other
+        FROM guest AS a 
+        JOIN guest_data AS b ON a.id = b.guest_id
+        WHERE a.code = $1
+    `,
+      [code]
+    );
+    console.log(rows[0]);
+    return rows[0];
   } catch (err) {
     console.log(err);
   }

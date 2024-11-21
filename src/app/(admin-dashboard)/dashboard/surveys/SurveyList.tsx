@@ -3,6 +3,7 @@
 import { SurveyData } from "@/db/dataTypes";
 import { useState } from "react";
 import { displaySurveys } from "@/server/actions";
+import Link from "next/link";
 
 export default function SurveyList({ data }: { data: SurveyData[] }) {
   const [surveys, setSurveys] = useState<SurveyData[]>(data);
@@ -37,14 +38,15 @@ function SurveyCard({ code, name, length, date }: SurveyData) {
   const dateToString = date.toLocaleString("en-us", { dateStyle: "long" });
 
   return (
-    <div
-      className={`p-4 bg-white rounded-md col-span-full grid grid-cols-subgrid`}
+    <Link
+      href={`/dashboard/surveys/${code}`}
+      className={`p-4 bg-white rounded-md col-span-full grid grid-cols-subgrid hover:bg-slate-400`}
     >
       <b>{name ?? "null"}</b>
       <p>{dateToString}</p>
       <p>{length} days</p>
       <i>{code}</i>
-    </div>
+    </Link>
   );
 }
 

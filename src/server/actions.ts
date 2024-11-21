@@ -1,11 +1,12 @@
 "use server";
 
-import { getSurveys, getUser } from "@/db/queries";
+import { getAllSurveys, getSurvey, getUser } from "@/db/queries";
 import { createSession, deleteSession, getSession } from "@/server/session";
 import { getCodes, createNewCode, createSurvey } from "@/db/queries";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { SurveyData } from "@/db/dataTypes";
 
 const loginSchema = z.object({
   username: z
@@ -94,6 +95,14 @@ export async function submitSurvey(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
-export async function displaySurveys(param = "name") {
-  return await getSurveys(param);
+export async function displaySurveys(
+  param = "name"
+): Promise<SurveyData[] | undefined> {
+  return await getAllSurveys(param);
+}
+
+export async function displaySpecificSurvey(
+  code: string
+): Promise<SurveyData | undefined> {
+  return await getSurvey(code);
 }
