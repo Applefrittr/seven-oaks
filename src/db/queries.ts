@@ -110,7 +110,6 @@ export async function getAllSurveys(
         ORDER BY ${param}
       `
     );
-    console.log(rows);
     return rows;
   } catch (err) {
     console.log(err);
@@ -129,6 +128,19 @@ export async function getSurvey(code: string): Promise<SurveyData | undefined> {
     );
     console.log(rows[0]);
     return rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function deleteSurvey(code: string) {
+  try {
+    await pool.query(
+      `DELETE FROM guest
+        WHERE code = $1
+        `,
+      [code]
+    );
   } catch (err) {
     console.log(err);
   }

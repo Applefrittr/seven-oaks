@@ -4,6 +4,7 @@ import { SurveyData } from "@/db/dataTypes";
 import { useState } from "react";
 import { displaySurveys } from "@/server/actions";
 import Link from "next/link";
+import dateToString from "@/lib/dateToString";
 
 export default function SurveyList({ data }: { data: SurveyData[] }) {
   const [surveys, setSurveys] = useState<SurveyData[]>(data);
@@ -35,7 +36,7 @@ export default function SurveyList({ data }: { data: SurveyData[] }) {
 }
 
 function SurveyCard({ code, name, length, date }: SurveyData) {
-  const dateToString = date.toLocaleString("en-us", { dateStyle: "long" });
+  const stringDate = dateToString(date);
 
   return (
     <Link
@@ -43,7 +44,7 @@ function SurveyCard({ code, name, length, date }: SurveyData) {
       className={`p-4 bg-white rounded-md col-span-full grid grid-cols-subgrid hover:bg-slate-400`}
     >
       <b>{name ?? "null"}</b>
-      <p>{dateToString}</p>
+      <p>{stringDate}</p>
       <p>{length} days</p>
       <i>{code}</i>
     </Link>

@@ -1,6 +1,6 @@
 "use server";
 
-import { getAllSurveys, getSurvey, getUser } from "@/db/queries";
+import { deleteSurvey, getAllSurveys, getSurvey, getUser } from "@/db/queries";
 import { createSession, deleteSession, getSession } from "@/server/session";
 import { getCodes, createNewCode, createSurvey } from "@/db/queries";
 import { redirect } from "next/navigation";
@@ -105,4 +105,10 @@ export async function displaySpecificSurvey(
   code: string
 ): Promise<SurveyData | undefined> {
   return await getSurvey(code);
+}
+
+export async function removeSurvey(code: string) {
+  console.log(code, " to be deleted");
+  await deleteSurvey(code);
+  redirect("/dashboard/surveys");
 }
