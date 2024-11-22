@@ -9,7 +9,8 @@ export default function DeleteSurvey({ code }: { code: string }) {
     <div className={`flex flex-col gap-2`}>
       <button
         onClick={() => setConfirmDelete(true)}
-        className={`bg-red-400 px-4 py-2 rounded-md w-max`}
+        disabled={confirmDelete ? true : false}
+        className={`bg-red-400 px-4 py-2 rounded-md w-max disabled:opacity-50`}
       >
         Delete
       </button>
