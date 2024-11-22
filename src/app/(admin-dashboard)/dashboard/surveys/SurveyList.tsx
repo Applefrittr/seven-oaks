@@ -2,15 +2,19 @@
 
 import { SurveyData } from "@/db/dataTypes";
 import { useState } from "react";
-import { displaySurveys } from "@/server/actions";
+import { sortSurveys } from "@/server/actions";
 import Link from "next/link";
 import dateToString from "@/lib/dateToString";
 
-export default function SurveyList({ data }: { data: SurveyData[] }) {
+type SurveyListProps = {
+  data: SurveyData[];
+};
+
+export default function SurveyList({ data }: SurveyListProps) {
   const [surveys, setSurveys] = useState<SurveyData[]>(data);
 
-  async function sortSurveys(param: string) {
-    const data = (await displaySurveys(param)) as SurveyData[];
+  async function sort(param: string) {
+    const data = (await sortSurveys(param)) as SurveyData[];
     setSurveys(data);
   }
 
@@ -18,7 +22,7 @@ export default function SurveyList({ data }: { data: SurveyData[] }) {
     <section className={`flex-auto flex flex-col gap-6`}>
       <div className="flex gap-4">
         <h1 className="font-extrabold text-xl">Surveys</h1>
-        <SortBtn sortSurveys={sortSurveys} />
+        <SortBtn sort={sort} />
       </div>
       <div className="grid grid-cols-[3fr_1fr_1fr_1fr] gap-4">
         <div className={`col-span-full grid grid-cols-subgrid`}>
@@ -52,10 +56,10 @@ function SurveyCard({ code, name, length, date }: SurveyData) {
 }
 
 type SortBtnProps = {
-  sortSurveys: (param: string) => void;
+  sort: (param: string) => void;
 };
 
-function SortBtn({ sortSurveys }: SortBtnProps) {
+function SortBtn({ sort }: SortBtnProps) {
   const [displayMenu, setDisplayMenu] = useState(false);
   return (
     <div
@@ -77,19 +81,19 @@ function SortBtn({ sortSurveys }: SortBtnProps) {
         <b className={`px-4 py-1`}>Sort By:</b>
         <ul>
           <li
-            onClick={() => sortSurveys("name")}
+            onClick={() => sort("name")}
             className={`px-4 py-1 hover:bg-slate-200`}
           >
             Name
           </li>
           <li
-            onClick={() => sortSurveys("date")}
+            onClick={() => sort("date")}
             className={`px-4 py-1 hover:bg-slate-200`}
           >
             Date
           </li>
           <li
-            onClick={() => sortSurveys("length")}
+            onClick={() => sort("length")}
             className={`px-4 py-1 hover:bg-slate-200 rounded-b-md`}
           >
             Length

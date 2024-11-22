@@ -1,8 +1,9 @@
-import { displayCodes, createCode } from "@/server/actions";
+import { createCode } from "@/server/actions";
 import { SurveyCode } from "@/db/dataTypes";
+import { getCodes } from "@/db/queries";
 
 export default async function Codes() {
-  const codes = await displayCodes();
+  const codes = await getCodes();
   console.log(codes);
   return (
     <section className={`flex-auto flex flex-col gap-6`}>

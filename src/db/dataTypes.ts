@@ -20,3 +20,8 @@ export type User = {
   email?: string | null;
   phone?: number | null;
 };
+
+export type DashboardMetrics = {
+  surveysTotal: number;
+  surveys30: number;
+};

@@ -1,8 +1,8 @@
 import { SurveyData } from "@/db/dataTypes";
-import { displaySpecificSurvey } from "@/server/actions";
 import { notFound } from "next/navigation";
 import dateToString from "@/lib/dateToString";
 import DeleteSurvey from "./DeleteSurvey";
+import { getSurvey } from "@/db/queries";
 
 export default async function Survey({
   params,
@@ -10,8 +10,9 @@ export default async function Survey({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
-  const { name, date, length, beverage, diet, other, code } =
-    (await displaySpecificSurvey(id)) as SurveyData;
+  const { name, date, length, beverage, diet, other, code } = (await getSurvey(
+    id
+  )) as SurveyData;
   if (!code) notFound();
 
   const stringDate = dateToString(date);

@@ -1,8 +1,8 @@
 "use server";
 
-import { deleteSurvey, getAllSurveys, getSurvey, getUser } from "@/db/queries";
-import { createSession, deleteSession, getSession } from "@/server/session";
-import { getCodes, createNewCode, createSurvey } from "@/db/queries";
+import { deleteSurvey, getAllSurveys, getUser } from "@/db/queries";
+import { createSession, deleteSession } from "@/server/session";
+import { createNewCode, createSurvey } from "@/db/queries";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -28,10 +28,6 @@ const surveySchema = z.object({
   other: z.string().trim(),
   beverage: z.string().trim(),
 });
-
-export async function returnSession() {
-  return await getSession();
-}
 
 export async function login(formData: FormData) {
   const result = loginSchema.safeParse(Object.fromEntries(formData));
@@ -60,10 +56,6 @@ export async function logout() {
   await deleteSession();
 
   redirect("/login");
-}
-
-export async function displayCodes() {
-  return await getCodes();
 }
 
 export async function createCode() {
@@ -95,16 +87,10 @@ export async function submitSurvey(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
-export async function displaySurveys(
+export async function sortSurveys(
   param = "name"
 ): Promise<SurveyData[] | undefined> {
   return await getAllSurveys(param);
-}
-
-export async function displaySpecificSurvey(
-  code: string
-): Promise<SurveyData | undefined> {
-  return await getSurvey(code);
 }
 
 export async function removeSurvey(code: string) {

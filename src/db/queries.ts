@@ -1,7 +1,7 @@
 import { pool } from "./pool";
 import codeGenerator from "@/lib/codeGenerator";
 
-import { SurveyData, User } from "@/db/dataTypes";
+import { SurveyData, User, DashboardMetrics } from "@/db/dataTypes";
 
 export async function createUser({
   username,
@@ -100,7 +100,7 @@ export async function createSurvey({
 }
 
 export async function getAllSurveys(
-  param: string
+  param = "name"
 ): Promise<SurveyData[] | undefined> {
   try {
     const { rows } = await pool.query(
@@ -141,6 +141,35 @@ export async function deleteSurvey(code: string) {
         `,
       [code]
     );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getDashboardMetrics(): Promise<
+  DashboardMetrics | undefined
+> {
+  try {
+    const dateNow = new Date();
+    const future = new Date();
+    future.setDate(future.getDate() + 30);
+    const surveysTotalCount = await pool.query(
+      `
+      SELECT COUNT(*) FROM guest_data WHERE date > $1 
+      `,
+      [dateNow]
+    );
+    const surveys30Count = await pool.query(
+      `
+      SELECT COUNT(*) FROM guest_data WHERE date > $1 AND date < $2
+      `,
+      [dateNow, future]
+    );
+
+    return {
+      surveysTotal: surveysTotalCount.rows[0].count,
+      surveys30: surveys30Count.rows[0].count,
+    };
   } catch (err) {
     console.log(err);
   }
