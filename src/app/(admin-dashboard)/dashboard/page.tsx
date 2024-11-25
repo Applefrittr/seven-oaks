@@ -1,14 +1,18 @@
-//import { dashboardMetrics } from "@/server/actions";
 import Calendar from "./Calendar";
-import { DashboardMetrics } from "@/db/dataTypes";
-import { getSession } from "@/server/session";
+import { DashboardMetrics, SurveyData } from "@/db/dataTypes";
 import { getDashboardMetrics } from "@/db/queries";
+import Link from "next/link";
+import dateToString from "@/lib/dateToString";
 
 export default async function Dashboard() {
-  const session = await getSession();
-  const { surveysTotal, surveys30 } =
-    (await getDashboardMetrics()) as DashboardMetrics;
-  console.log(session);
+  const {
+    surveysTotal,
+    surveys30,
+    nextSurvey,
+    currentSurveys,
+    upcomingSurveys,
+    beveragePref,
+  } = (await getDashboardMetrics()) as DashboardMetrics;
 
   return (
     <section className={`flex-auto flex flex-col gap-6 min-h-full`}>
@@ -19,19 +23,28 @@ export default async function Dashboard() {
         </DashboardContainer>
         <div className="flex gap-6 flex-wrap justify-end">
           <DashboardContainer header={"Total Upcoming Reservations (30 days)"}>
-            <DashboardData>{surveys30}</DashboardData>
+            <DashboardData>
+              <b>{surveys30}</b>
+            </DashboardData>
           </DashboardContainer>
           <DashboardContainer header={"Total Reservations"}>
-            <DashboardData>{surveysTotal}</DashboardData>
+            <DashboardData>
+              <b>{surveysTotal}</b>
+            </DashboardData>
           </DashboardContainer>
           <DashboardContainer header={"Overall Beverage Peference"}>
-            <DashboardData>coffee</DashboardData>
+            <DashboardData>
+              <b>{beveragePref}</b>
+            </DashboardData>
           </DashboardContainer>
-          <DashboardContainer header={"Current Reservation"}>
-            <DashboardData>NONE</DashboardData>
+          <DashboardContainer header={"Current Reservation(s)"}>
+            <CurrentSurveys currentSurveys={currentSurveys} />
           </DashboardContainer>
           <DashboardContainer header={"Next Reservation"}>
-            <DashboardData>NONE</DashboardData>
+            <DashboardData>
+              {nextSurvey && <NextSurvey {...nextSurvey} />}
+              {!nextSurvey && <b>NONE</b>}
+            </DashboardData>
           </DashboardContainer>
         </div>
       </div>
@@ -40,7 +53,7 @@ export default async function Dashboard() {
           header={"Upcoming Reservations"}
           customStyle={`h-full`}
         >
-          <DashboardData>NONE</DashboardData>
+          <UpcomingSurveys upcomingSurveys={upcomingSurveys} />
         </DashboardContainer>
       </div>
     </section>
@@ -73,5 +86,93 @@ function DashboardContainer({
 }
 
 function DashboardData({ children }: { children: React.ReactNode }) {
-  return <b className="text-right text-3xl">{children}</b>;
+  return <div className={`text-3xl flex justify-end`}>{children}</div>;
+}
+
+type CurrentSurveyProps = {
+  currentSurveys: SurveyData[];
+};
+
+function CurrentSurveys({ currentSurveys }: CurrentSurveyProps) {
+  return (
+    <div className={`flex flex-col gap-2 items-end`}>
+      {currentSurveys.length > 0 &&
+        currentSurveys.map((survey) => {
+          const today = new Date().setHours(0, 0, 0, 0);
+          const leavingDate = new Date(survey.date);
+          leavingDate.setDate(leavingDate.getDate() + Number(survey.length));
+
+          const daysLeft =
+            (leavingDate.getTime() - today) / (24 * 60 * 60 * 1000);
+
+          return (
+            <Link
+              key={survey.code}
+              className={`text-base p-4 bg-slate-100 rounded-md flex gap-4 w-max hover:bg-slate-400`}
+              href={`/dashboard/surveys/${survey.code}`}
+            >
+              <b>{survey.name}</b>
+              <p>
+                Remaining Days: <b>{daysLeft}</b>
+              </p>
+              <i>{survey.code}</i>
+            </Link>
+          );
+        })}
+      {currentSurveys.length === 0 && <b>NONE</b>}
+    </div>
+  );
+}
+
+function NextSurvey({ code, name, date }: SurveyData) {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const daysUntilArrival = (date.getTime() - today) / (24 * 60 * 60 * 1000);
+
+  return (
+    <Link
+      className={`text-base p-4 bg-slate-100 rounded-md flex gap-4 w-max hover:bg-slate-400`}
+      href={`/dashboard/surveys/${code}`}
+    >
+      <b>{name}</b>
+      <p>
+        Days Until Arrival: <b>{daysUntilArrival}</b>
+      </p>
+      <i>{code}</i>
+    </Link>
+  );
+}
+
+type UpcomingSurveyProps = {
+  upcomingSurveys: SurveyData[];
+};
+
+function UpcomingSurveys({ upcomingSurveys }: UpcomingSurveyProps) {
+  return (
+    <section className={`flex-auto flex flex-col gap-6`}>
+      <div className="grid grid-cols-[3fr_1fr_1fr_1fr] gap-4">
+        <div className={`col-span-full grid grid-cols-subgrid`}>
+          <b>Party Name</b>
+          <b>Arrival Date</b>
+          <b>Length of Stay</b>
+          <b>Survey Code</b>
+        </div>
+        {upcomingSurveys.length > 0 &&
+          upcomingSurveys.map((survey) => {
+            return (
+              <Link
+                key={survey.code}
+                href={`/dashboard/surveys/${survey.code}`}
+                className={`text-base p-4 bg-slate-200 rounded-md col-span-full grid grid-cols-subgrid hover:bg-slate-400`}
+              >
+                <b>{survey.name ?? "null"}</b>
+                <p>{dateToString(survey.date)}</p>
+                <p>{survey.length} days</p>
+                <i>{survey.code}</i>
+              </Link>
+            );
+          })}
+        {upcomingSurveys.length === 0 && <b>NONE</b>}
+      </div>
+    </section>
+  );
 }

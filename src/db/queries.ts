@@ -100,7 +100,7 @@ export async function createSurvey({
 }
 
 export async function getAllSurveys(
-  param = "name"
+  param = "date"
 ): Promise<SurveyData[] | undefined> {
   try {
     const { rows } = await pool.query(
@@ -150,25 +150,67 @@ export async function getDashboardMetrics(): Promise<
   DashboardMetrics | undefined
 > {
   try {
-    const dateNow = new Date();
-    const future = new Date();
-    future.setDate(future.getDate() + 30);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const surveysTotalCount = await pool.query(
       `
       SELECT COUNT(*) FROM guest_data WHERE date > $1 
       `,
-      [dateNow]
+      [today]
     );
     const surveys30Count = await pool.query(
       `
-      SELECT COUNT(*) FROM guest_data WHERE date > $1 AND date < $2
+      SELECT COUNT(*) FROM guest_data WHERE date > $1 AND date < $1 + 30
       `,
-      [dateNow, future]
+      [today]
+    );
+    const currentSurveys = await pool.query(
+      `
+      SELECT a.code, b.name, b.date, b.length
+      FROM guest AS a JOIN guest_data AS b ON a.id = b.guest_id
+      WHERE $1 >= b.date AND $1 < b.date + b.length
+      `,
+      [today]
+    );
+    const nextSurvey = await pool.query(
+      `
+      SELECT a.code, b.name, b.date
+      FROM guest AS a JOIN guest_data AS b ON a.id = b.guest_id
+      WHERE b.date > $1
+      ORDER BY b.date LIMIT 1
+      `,
+      [today]
+    );
+    const upcomingSurveys = await pool.query(
+      `
+      SELECT a.code, b.name, b.date, b.length
+      FROM guest AS a JOIN guest_data AS b ON a.id = b.guest_id
+      WHERE b.date > $1
+      ORDER BY b.date
+      LIMIT 3
+      `,
+      [today]
+    );
+
+    const beverageCount = await pool.query(
+      `
+      SELECT SUM(CASE WHEN beverage = 'Coffee' THEN 1 ELSE 0 END) AS coffee,
+      SUM(CASE WHEN beverage = 'Tea' THEN 1 ELSE 0 END) AS tea
+      FROM guest_data
+      `
     );
 
     return {
       surveysTotal: surveysTotalCount.rows[0].count,
       surveys30: surveys30Count.rows[0].count,
+      currentSurveys: currentSurveys.rows,
+      nextSurvey: nextSurvey.rows[0],
+      upcomingSurveys: upcomingSurveys.rows,
+      beveragePref:
+        beverageCount.rows[0].coffee < beverageCount.rows[0].tea
+          ? "Tea"
+          : "Coffee",
     };
   } catch (err) {
     console.log(err);

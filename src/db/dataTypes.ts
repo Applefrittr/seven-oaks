@@ -2,7 +2,7 @@ export type SurveyData = {
   length: string;
   name: string;
   code: string;
-  date: Date | string;
+  date: Date;
   beverage: string;
   diet: string;
   other: string;
@@ -24,4 +24,8 @@ export type User = {
 export type DashboardMetrics = {
   surveysTotal: number;
   surveys30: number;
+  currentSurveys: SurveyData[];
+  nextSurvey: SurveyData;
+  upcomingSurveys: SurveyData[];
+  beveragePref: string;
 };

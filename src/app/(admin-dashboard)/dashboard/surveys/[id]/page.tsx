@@ -19,7 +19,7 @@ export default async function Survey({
 
   return (
     <section className={`flex-auto flex flex-col gap-6`}>
-      <h1 className="font-extrabold text-xl">
+      <h1 className={`font-extrabold text-xl`}>
         Survey - <i>{id}</i>
       </h1>
       <div

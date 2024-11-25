@@ -22,7 +22,7 @@ const loginSchema = z.object({
 const surveySchema = z.object({
   code: z.string().min(5, { message: "Please enter valid survey code" }).trim(),
   name: z.string().min(1, { message: "Enter party name" }).trim(),
-  date: z.string().date(),
+  date: z.date(),
   length: z.string().min(1, { message: "Enter length of stay" }).trim(),
   diet: z.string().trim(),
   other: z.string().trim(),

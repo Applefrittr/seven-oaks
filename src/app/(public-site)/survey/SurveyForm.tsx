@@ -68,7 +68,7 @@ export default function SurveyForm() {
         Length of stay
       </label>
       <input
-        type="length"
+        type="number"
         id="length"
         min="1"
         max="14"
