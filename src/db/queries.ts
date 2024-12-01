@@ -1,5 +1,6 @@
 import { pool } from "./pool";
 import codeGenerator from "@/lib/codeGenerator";
+import dateToday from "@/lib/dateToday";
 
 import { SurveyData, User, DashboardMetrics } from "@/db/dataTypes";
 
@@ -116,6 +117,50 @@ export async function getAllSurveys(
   }
 }
 
+export async function getUpcomingSurveys(
+  param = "date"
+): Promise<SurveyData[] | undefined> {
+  try {
+    const today = dateToday();
+
+    const { rows } = await pool.query(
+      `SELECT a.code, b.name AS name, b.date AS date, b.length AS length, b.beverage, b.diet, b.other
+        FROM guest AS a 
+        JOIN guest_data AS b ON a.id = b.guest_id
+        WHERE date > $1
+        ORDER BY ${param}
+      `,
+      [today]
+    );
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getPastSurveys(
+  param = "date"
+): Promise<SurveyData[] | undefined> {
+  try {
+    const today = dateToday();
+
+    const { rows } = await pool.query(
+      `SELECT a.code, b.name AS name, b.date AS date, b.length AS length, b.beverage, b.diet, b.other
+        FROM guest AS a 
+        JOIN guest_data AS b ON a.id = b.guest_id
+        WHERE date < $1
+        ORDER BY ${param}
+      `,
+      [today]
+    );
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getSurvey(code: string): Promise<SurveyData | undefined> {
   try {
     const { rows } = await pool.query(
@@ -150,8 +195,7 @@ export async function getDashboardMetrics(): Promise<
   DashboardMetrics | undefined
 > {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const today = dateToday();
 
     const surveysTotalCount = await pool.query(
       `

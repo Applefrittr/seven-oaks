@@ -1,10 +1,11 @@
 "use client";
 
 import { SurveyData } from "@/db/dataTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sortSurveys } from "@/server/actions";
 import Link from "next/link";
 import dateToString from "@/lib/dateToString";
+import dateToday from "@/lib/dateToday";
 
 type SurveyListProps = {
   data: SurveyData[];
@@ -12,17 +13,39 @@ type SurveyListProps = {
 
 export default function SurveyList({ data }: SurveyListProps) {
   const [surveys, setSurveys] = useState<SurveyData[]>(data);
+  const [view, setView] = useState<"Upcoming" | "Past" | "All">("Upcoming");
 
-  async function sort(param: string) {
-    const data = (await sortSurveys(param)) as SurveyData[];
+  async function sort(param = "date", view = "Upcoming") {
+    const data = (await sortSurveys(param, view)) as SurveyData[];
     setSurveys(data);
   }
+
+  const toggleView = () => {
+    setView((prev) => {
+      if (prev === "Upcoming") return "Past";
+      else if (prev === "Past") return "All";
+      else return "Upcoming";
+    });
+  };
+
+  useEffect(() => {
+    sort("date", view);
+  }, [view]);
 
   return (
     <section className={`flex-auto flex flex-col gap-6`}>
       <div className="flex gap-4">
         <h1 className="font-extrabold text-xl">Surveys</h1>
-        <SortBtn sort={sort} />
+        <SortBtn sort={sort} view={view} />
+      </div>
+      <div className={`flex gap-4 items-center`}>
+        <b>Current View:</b>
+        <button
+          onClick={toggleView}
+          className={`px-4 py-1 rounded-md bg-slate-500 w-max text-white`}
+        >
+          {view}
+        </button>
       </div>
       <div className="grid grid-cols-[3fr_1fr_1fr_1fr] gap-4">
         <div className={`col-span-full grid grid-cols-subgrid`}>
@@ -40,12 +63,18 @@ export default function SurveyList({ data }: SurveyListProps) {
 }
 
 function SurveyCard({ code, name, length, date }: SurveyData) {
+  const today = dateToday();
   const stringDate = dateToString(date);
 
   return (
     <Link
       href={`/dashboard/surveys/${code}`}
-      className={`p-4 bg-white rounded-md col-span-full grid grid-cols-subgrid hover:bg-slate-400`}
+      className={`p-4 ${
+        date < today
+          ? "bg-red-200 hover:bg-red-400"
+          : "bg-white hover:bg-slate-400"
+      } rounded-md col-span-full grid grid-cols-subgrid
+      }`}
     >
       <b>{name ?? "null"}</b>
       <p>{stringDate}</p>
@@ -56,10 +85,11 @@ function SurveyCard({ code, name, length, date }: SurveyData) {
 }
 
 type SortBtnProps = {
-  sort: (param: string) => void;
+  view: string;
+  sort: (param: string, view: string) => void;
 };
 
-function SortBtn({ sort }: SortBtnProps) {
+function SortBtn({ sort, view }: SortBtnProps) {
   const [displayMenu, setDisplayMenu] = useState(false);
   return (
     <div
@@ -81,19 +111,19 @@ function SortBtn({ sort }: SortBtnProps) {
         <b className={`px-4 py-1`}>Sort By:</b>
         <ul>
           <li
-            onClick={() => sort("name")}
+            onClick={() => sort("name", view)}
             className={`px-4 py-1 hover:bg-slate-200`}
           >
             Name
           </li>
           <li
-            onClick={() => sort("date")}
+            onClick={() => sort("date", view)}
             className={`px-4 py-1 hover:bg-slate-200`}
           >
             Date
           </li>
           <li
-            onClick={() => sort("length")}
+            onClick={() => sort("length", view)}
             className={`px-4 py-1 hover:bg-slate-200 rounded-b-md`}
           >
             Length

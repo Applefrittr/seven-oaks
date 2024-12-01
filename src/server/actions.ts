@@ -1,6 +1,12 @@
 "use server";
 
-import { deleteSurvey, getAllSurveys, getUser } from "@/db/queries";
+import {
+  deleteSurvey,
+  getAllSurveys,
+  getPastSurveys,
+  getUpcomingSurveys,
+  getUser,
+} from "@/db/queries";
 import { createSession, deleteSession } from "@/server/session";
 import { createNewCode, createSurvey } from "@/db/queries";
 import { redirect } from "next/navigation";
@@ -88,9 +94,12 @@ export async function submitSurvey(formData: FormData) {
 }
 
 export async function sortSurveys(
-  param = "name"
+  param = "name",
+  view = "Upcoming"
 ): Promise<SurveyData[] | undefined> {
-  return await getAllSurveys(param);
+  if (view === "Upcoming") return await getUpcomingSurveys(param);
+  else if (view === "Past") return await getPastSurveys(param);
+  else return getAllSurveys(param);
 }
 
 export async function removeSurvey(code: string) {
