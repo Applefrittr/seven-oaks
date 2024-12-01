@@ -22,6 +22,22 @@ export async function createUser({
   }
 }
 
+export async function updateUsername(id: string, nw: string) {
+  try {
+    console.log(nw, id);
+    await pool.query(
+      `
+      UPDATE users
+      SET username = $1
+      WHERE id = $2
+      `,
+      [nw, id]
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getUser(username: string) {
   try {
     const { rows } = await pool.query(

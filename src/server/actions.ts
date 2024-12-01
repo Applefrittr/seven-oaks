@@ -6,34 +6,14 @@ import {
   getPastSurveys,
   getUpcomingSurveys,
   getUser,
+  updateUsername,
 } from "@/db/queries";
 import { createSession, deleteSession } from "@/server/session";
 import { createNewCode, createSurvey } from "@/db/queries";
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import { loginSchema, surveySchema, usernameSchema } from "./dataSchemas";
 import { revalidatePath } from "next/cache";
 import { SurveyData } from "@/db/dataTypes";
-
-const loginSchema = z.object({
-  username: z
-    .string()
-    .min(3, { message: "Username must be at least 3 characters" })
-    .trim(),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .trim(),
-});
-
-const surveySchema = z.object({
-  code: z.string().min(5, { message: "Please enter valid survey code" }).trim(),
-  name: z.string().min(1, { message: "Enter party name" }).trim(),
-  date: z.date(),
-  length: z.string().min(1, { message: "Enter length of stay" }).trim(),
-  diet: z.string().trim(),
-  other: z.string().trim(),
-  beverage: z.string().trim(),
-});
 
 export async function login(formData: FormData) {
   const result = loginSchema.safeParse(Object.fromEntries(formData));
@@ -62,6 +42,19 @@ export async function logout() {
   await deleteSession();
 
   redirect("/login");
+}
+
+export async function changeUsername(formData: FormData) {
+  const result = usernameSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    return {
+      errors: result.error.flatten().fieldErrors,
+    };
+  }
+  const { username, id } = result.data;
+
+  await updateUsername(id, username);
 }
 
 export async function createCode() {
