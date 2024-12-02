@@ -1,18 +1,11 @@
 import Calendar from "./Calendar";
-import { DashboardMetrics, SurveyData } from "@/db/dataTypes";
+import { SurveyData } from "@/db/dataTypes";
 import { getDashboardMetrics } from "@/db/queries";
 import Link from "next/link";
 import dateToString from "@/lib/dateToString";
 
 export default async function Dashboard() {
-  const {
-    surveysTotal,
-    surveys30,
-    nextSurvey,
-    currentSurveys,
-    upcomingSurveys,
-    beveragePref,
-  } = (await getDashboardMetrics()) as DashboardMetrics;
+  const metrics = await getDashboardMetrics();
 
   return (
     <section className={`flex-auto flex flex-col gap-6 min-h-full`}>
@@ -24,26 +17,26 @@ export default async function Dashboard() {
         <div className="flex gap-6 flex-wrap justify-end">
           <DashboardContainer header={"Total Upcoming Reservations (30 days)"}>
             <DashboardData>
-              <b>{surveys30}</b>
+              <b>{metrics?.surveys30}</b>
             </DashboardData>
           </DashboardContainer>
           <DashboardContainer header={"Total Reservations"}>
             <DashboardData>
-              <b>{surveysTotal}</b>
+              <b>{metrics?.surveysTotal}</b>
             </DashboardData>
           </DashboardContainer>
           <DashboardContainer header={"Overall Beverage Peference"}>
             <DashboardData>
-              <b>{beveragePref}</b>
+              <b>{metrics?.beveragePref}</b>
             </DashboardData>
           </DashboardContainer>
           <DashboardContainer header={"Current Reservation(s)"}>
-            <CurrentSurveys currentSurveys={currentSurveys} />
+            <CurrentSurveys currentSurveys={metrics?.currentSurveys} />
           </DashboardContainer>
           <DashboardContainer header={"Next Reservation"}>
             <DashboardData>
-              {nextSurvey && <NextSurvey {...nextSurvey} />}
-              {!nextSurvey && <b>NONE</b>}
+              {metrics?.nextSurvey && <NextSurvey {...metrics.nextSurvey} />}
+              {!metrics?.nextSurvey && <b>NONE</b>}
             </DashboardData>
           </DashboardContainer>
         </div>
@@ -53,7 +46,7 @@ export default async function Dashboard() {
           header={"Upcoming Reservations"}
           customStyle={`h-full`}
         >
-          <UpcomingSurveys upcomingSurveys={upcomingSurveys} />
+          <UpcomingSurveys upcomingSurveys={metrics?.upcomingSurveys} />
         </DashboardContainer>
       </div>
     </section>
@@ -90,13 +83,14 @@ function DashboardData({ children }: { children: React.ReactNode }) {
 }
 
 type CurrentSurveyProps = {
-  currentSurveys: SurveyData[];
+  currentSurveys: SurveyData[] | undefined;
 };
 
 function CurrentSurveys({ currentSurveys }: CurrentSurveyProps) {
   return (
     <div className={`flex flex-col gap-2 items-end`}>
-      {currentSurveys.length > 0 &&
+      {currentSurveys &&
+        currentSurveys.length > 0 &&
         currentSurveys.map((survey) => {
           const today = new Date().setHours(0, 0, 0, 0);
           const leavingDate = new Date(survey.date);
@@ -119,7 +113,7 @@ function CurrentSurveys({ currentSurveys }: CurrentSurveyProps) {
             </Link>
           );
         })}
-      {currentSurveys.length === 0 && <b>NONE</b>}
+      {currentSurveys && currentSurveys.length === 0 && <b>NONE</b>}
     </div>
   );
 }
@@ -143,7 +137,7 @@ function NextSurvey({ code, name, date }: SurveyData) {
 }
 
 type UpcomingSurveyProps = {
-  upcomingSurveys: SurveyData[];
+  upcomingSurveys: SurveyData[] | undefined;
 };
 
 function UpcomingSurveys({ upcomingSurveys }: UpcomingSurveyProps) {
@@ -156,7 +150,8 @@ function UpcomingSurveys({ upcomingSurveys }: UpcomingSurveyProps) {
           <b>Length of Stay</b>
           <b>Survey Code</b>
         </div>
-        {upcomingSurveys.length > 0 &&
+        {upcomingSurveys &&
+          upcomingSurveys.length > 0 &&
           upcomingSurveys.map((survey) => {
             return (
               <Link
@@ -171,7 +166,7 @@ function UpcomingSurveys({ upcomingSurveys }: UpcomingSurveyProps) {
               </Link>
             );
           })}
-        {upcomingSurveys.length === 0 && <b>NONE</b>}
+        {upcomingSurveys && upcomingSurveys.length === 0 && <b>NONE</b>}
       </div>
     </section>
   );
