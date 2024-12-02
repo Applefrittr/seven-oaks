@@ -13,7 +13,11 @@ type Success = {
   password?: string[] | undefined;
 };
 
-export default function UpdatePassword({ userID }: { userID: string }) {
+export default function UpdatePassword({
+  userID,
+}: {
+  userID: string | undefined;
+}) {
   const [errors, setErrors] = useState<Errors | null>(null);
   const [success, setSuccess] = useState<Success | null>(null);
 
@@ -41,7 +45,7 @@ export default function UpdatePassword({ userID }: { userID: string }) {
       onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
         handleSubmit(event)
       }
-      className={`flex flex-col gap-2 min-w-80`}
+      className={`flex flex-col gap-2`}
     >
       <legend>
         <b>Change Password</b>

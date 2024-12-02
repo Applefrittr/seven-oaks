@@ -15,6 +15,7 @@ export type SurveyCode = {
 };
 
 export type User = {
+  id: string;
   username: string;
   password: string;
   email?: string | null;

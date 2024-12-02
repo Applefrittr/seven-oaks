@@ -8,6 +8,7 @@ import {
   getUser,
   updateUsername,
   updatePassword,
+  updateEmail,
   createNewCode,
   createSurvey,
   getUserbyId,
@@ -19,6 +20,7 @@ import {
   surveySchema,
   usernameSchema,
   passwordSchema,
+  emailSchema,
 } from "./dataSchemas";
 import { revalidatePath } from "next/cache";
 import { SurveyData } from "@/db/dataTypes";
@@ -33,15 +35,15 @@ export async function login(formData: FormData) {
   }
   const { username, password } = result.data;
 
-  const results = await getUser(username);
+  const user = await getUser(username);
 
-  if (results?.length === 0 || (results && password !== results[0].password)) {
+  if (!user || (user && password !== user.password)) {
     return {
       errors: { username: ["Invalid username or password"] },
     };
   }
 
-  await createSession(results && results[0].id);
+  await createSession(user.id);
 
   redirect("/dashboard");
 }
@@ -64,6 +66,8 @@ export async function changeUsername(formData: FormData) {
 
   await updateUsername(id, username);
 
+  revalidatePath("/dashboard/settings");
+
   return {
     success: { username: ["Username successfully updated"] },
   };
@@ -79,9 +83,9 @@ export async function changePassword(formData: FormData) {
   }
   const { oldPass, newPass, confirmPass, id } = result.data;
 
-  const results = await getUserbyId(id);
+  const user = await getUserbyId(id);
 
-  if (results && oldPass !== results[0].password) {
+  if (user && oldPass !== user.password) {
     return {
       errors: { oldPass: ["Incorrect password"] },
     };
@@ -97,6 +101,24 @@ export async function changePassword(formData: FormData) {
 
   return {
     success: { password: ["Password successfully updated"] },
+  };
+}
+
+export async function changeEmail(formData: FormData) {
+  const result = emailSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    return {
+      errors: result.error.flatten().fieldErrors,
+    };
+  }
+
+  const { email, id } = result.data;
+
+  await updateEmail(id, email);
+
+  return {
+    success: { email: ["Email successfully updated"] },
   };
 }
 

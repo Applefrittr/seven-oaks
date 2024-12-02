@@ -1,21 +1,22 @@
 "use client";
-import { changeUsername } from "@/server/actions";
+import DashboardButton from "@/app/components/DashboardButton";
+import { changeEmail } from "@/server/actions";
 import { useState } from "react";
-import DashboardButton from "../../../components/DashboardButton";
+
+type UpdateEmailProps = {
+  email: string | undefined | null;
+  userID: string | undefined;
+};
 
 type Errors = {
-  username?: string[] | undefined;
+  email?: string[] | undefined;
 };
 
 type Success = {
-  username?: string[] | undefined;
+  email?: string[] | undefined;
 };
 
-export default function UpdateUsername({
-  userID,
-}: {
-  userID: string | undefined;
-}) {
+export default function UpdateEmail({ email, userID }: UpdateEmailProps) {
   const [errors, setErrors] = useState<Errors | null>(null);
   const [success, setSuccess] = useState<Success | null>(null);
 
@@ -23,7 +24,7 @@ export default function UpdateUsername({
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const updateState = await changeUsername(formData);
+    const updateState = await changeEmail(formData);
 
     if (updateState?.errors) {
       setErrors(updateState.errors);
@@ -37,7 +38,6 @@ export default function UpdateUsername({
       setSuccess(null);
     }
   };
-
   return (
     <form
       onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
@@ -45,21 +45,19 @@ export default function UpdateUsername({
       }
       className={`flex flex-col gap-2`}
     >
-      <label htmlFor="username">
-        <b>Change Username</b>
+      <label htmlFor="email">
+        <i>Update Email</i>
       </label>
       <input
-        id="username"
-        name="username"
+        id="email"
+        name="email"
         className={`bg-slate-100 p-1 rounded-md`}
-        placeholder="username..."
+        placeholder={email ?? `abc@123.com`}
       />
       <input name="id" value={userID} hidden readOnly />
-      <DashboardButton>Submit</DashboardButton>
-      {errors?.username && <p className="text-red-600">{errors.username}</p>}
-      {success?.username && (
-        <p className="text-green-600">{success.username}</p>
-      )}
+      <DashboardButton>Update Email</DashboardButton>
+      {errors?.email && <p className="text-red-600">{errors.email}</p>}
+      {success?.email && <p className="text-green-600">{success.email}</p>}
     </form>
   );
 }

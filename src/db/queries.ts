@@ -53,25 +53,40 @@ export async function updatePassword(id: string, password: string) {
   }
 }
 
-export async function getUser(username: string) {
+export async function updateEmail(id: string, email: string) {
   try {
-    const { rows } = await pool.query(
-      `SELECT * FROM users WHERE username = $1`,
-      [username]
+    await pool.query(
+      `
+      UPDATE users
+      SET email = $1
+      WHERE id = $2
+      `,
+      [email, id]
     );
-    return rows;
   } catch (err) {
     console.log(err);
   }
 }
 
-export async function getUserbyId(id: string) {
+export async function getUser(username: string): Promise<User | undefined> {
+  try {
+    const { rows } = await pool.query(
+      `SELECT * FROM users WHERE username = $1`,
+      [username]
+    );
+    return rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getUserbyId(id: string): Promise<User | undefined> {
   try {
     const { rows } = await pool.query(`SELECT * FROM users WHERE id = $1`, [
       id,
     ]);
 
-    return rows;
+    return rows[0];
   } catch (err) {
     console.log(err);
   }
