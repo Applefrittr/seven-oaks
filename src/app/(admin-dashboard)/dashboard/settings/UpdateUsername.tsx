@@ -1,18 +1,23 @@
 "use client";
 import { changeUsername } from "@/server/actions";
 import { useState } from "react";
+import DashboardButton from "../../../components/DashboardButton";
 
 type Errors = {
   username?: string[] | undefined;
 };
 
+type Success = {
+  username?: string[] | undefined;
+};
+
 export default function UpdateUsername({ userID }: { userID: string }) {
   const [errors, setErrors] = useState<Errors | null>(null);
+  const [success, setSuccess] = useState<Success | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log({ userID });
     const formData = new FormData(e.currentTarget);
     const updateState = await changeUsername(formData);
 
@@ -21,6 +26,12 @@ export default function UpdateUsername({ userID }: { userID: string }) {
     } else {
       setErrors(null);
     }
+
+    if (updateState?.success) {
+      setSuccess(updateState.success);
+    } else {
+      setSuccess(null);
+    }
   };
 
   return (
@@ -28,12 +39,23 @@ export default function UpdateUsername({ userID }: { userID: string }) {
       onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
         handleSubmit(event)
       }
+      className={`flex flex-col gap-2 w-max min-w-80`}
     >
-      <label htmlFor="username">New Username</label>
-      <input id="username" name="username" />
-      {errors?.username && <p className="text-red-600">{errors.username}</p>}
+      <label htmlFor="username">
+        <b>Change Username</b>
+      </label>
+      <input
+        id="username"
+        name="username"
+        className={`bg-slate-100 p-1 rounded-md`}
+        placeholder="username..."
+      />
       <input name="id" value={userID} hidden readOnly />
-      <button type="submit">Submit</button>
+      <DashboardButton>Submit</DashboardButton>
+      {errors?.username && <p className="text-red-600">{errors.username}</p>}
+      {success?.username && (
+        <p className="text-green-600">{success.username}</p>
+      )}
     </form>
   );
 }

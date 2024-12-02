@@ -28,3 +28,19 @@ export const usernameSchema = z.object({
     .trim(),
   id: z.string().trim(),
 });
+
+export const passwordSchema = z.object({
+  oldPass: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" })
+    .trim(),
+  newPass: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" })
+    .trim(),
+  confirmPass: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" })
+    .trim(),
+  id: z.string().trim(),
+});

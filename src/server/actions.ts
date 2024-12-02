@@ -7,11 +7,19 @@ import {
   getUpcomingSurveys,
   getUser,
   updateUsername,
+  updatePassword,
+  createNewCode,
+  createSurvey,
+  getUserbyId,
 } from "@/db/queries";
 import { createSession, deleteSession } from "@/server/session";
-import { createNewCode, createSurvey } from "@/db/queries";
 import { redirect } from "next/navigation";
-import { loginSchema, surveySchema, usernameSchema } from "./dataSchemas";
+import {
+  loginSchema,
+  surveySchema,
+  usernameSchema,
+  passwordSchema,
+} from "./dataSchemas";
 import { revalidatePath } from "next/cache";
 import { SurveyData } from "@/db/dataTypes";
 
@@ -55,6 +63,41 @@ export async function changeUsername(formData: FormData) {
   const { username, id } = result.data;
 
   await updateUsername(id, username);
+
+  return {
+    success: { username: ["Username successfully updated"] },
+  };
+}
+
+export async function changePassword(formData: FormData) {
+  const result = passwordSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    return {
+      errors: result.error.flatten().fieldErrors,
+    };
+  }
+  const { oldPass, newPass, confirmPass, id } = result.data;
+
+  const results = await getUserbyId(id);
+
+  if (results && oldPass !== results[0].password) {
+    return {
+      errors: { oldPass: ["Incorrect password"] },
+    };
+  }
+
+  if (newPass !== confirmPass) {
+    return {
+      errors: { newPass: ["New password and confirm did not match"] },
+    };
+  }
+
+  await updatePassword(id, newPass);
+
+  return {
+    success: { password: ["Password successfully updated"] },
+  };
 }
 
 export async function createCode() {

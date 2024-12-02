@@ -1,6 +1,7 @@
 import Logo from "../../../../public/SO-logo-inverse.png";
 import { logout } from "@/server/actions";
 import Navigation from "@/app/components/Navigation";
+import DashboardButton from "@/app/components/DashboardButton";
 
 export default function Layout({
   children,
@@ -36,12 +37,7 @@ function DashboardNav() {
 function Logout() {
   return (
     <form action={logout} className={`p-8`}>
-      <button
-        type="submit"
-        className={`px-4 py-1 rounded-md bg-slate-500 w-max text-white`}
-      >
-        Logout
-      </button>
+      <DashboardButton>Logout</DashboardButton>
     </form>
   );
 }

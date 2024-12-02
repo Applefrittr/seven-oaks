@@ -38,12 +38,39 @@ export async function updateUsername(id: string, nw: string) {
   }
 }
 
+export async function updatePassword(id: string, password: string) {
+  try {
+    await pool.query(
+      `
+      UPDATE users
+      SET password = $1
+      WHERE id = $2
+      `,
+      [password, id]
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getUser(username: string) {
   try {
     const { rows } = await pool.query(
       `SELECT * FROM users WHERE username = $1`,
       [username]
     );
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getUserbyId(id: string) {
+  try {
+    const { rows } = await pool.query(`SELECT * FROM users WHERE id = $1`, [
+      id,
+    ]);
+
     return rows;
   } catch (err) {
     console.log(err);
