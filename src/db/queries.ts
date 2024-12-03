@@ -68,6 +68,25 @@ export async function updateEmail(id: string, email: string) {
   }
 }
 
+export async function updateNotifications(
+  id: string | undefined,
+  column: string
+) {
+  try {
+    console.log({ column, id });
+    await pool.query(
+      `
+      UPDATE users
+      SET ${column} = NOT ${column}
+      WHERE id = $1
+      `,
+      [id]
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getUser(username: string): Promise<User | undefined> {
   try {
     const { rows } = await pool.query(

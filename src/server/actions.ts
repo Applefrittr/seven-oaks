@@ -9,6 +9,7 @@ import {
   updateUsername,
   updatePassword,
   updateEmail,
+  updateNotifications,
   createNewCode,
   createSurvey,
   getUserbyId,
@@ -164,4 +165,15 @@ export async function removeSurvey(code: string) {
   console.log(code, " to be deleted");
   await deleteSurvey(code);
   redirect("/dashboard/surveys");
+}
+
+export async function toggleNotifications(
+  id: string | undefined,
+  notifications: "email" | "text"
+) {
+  let column;
+  if (notifications === "email") column = "email_notifications";
+  else column = "text_notifications";
+
+  await updateNotifications(id, column);
 }

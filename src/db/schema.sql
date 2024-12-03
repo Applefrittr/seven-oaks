@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS users (
   username VARCHAR ( 50 ),
   password VARCHAR ( 50 ),
   email VARCHAR ( 254 ),
-  phone VARCHAR ( 10 )
+  phone VARCHAR ( 10 ),
+  email_notifications BOOLEAN,
+  admin BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS guest (

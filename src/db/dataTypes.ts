@@ -20,6 +20,7 @@ export type User = {
   password: string;
   email?: string | null;
   phone?: number | null;
+  email_notifications: boolean | null;
 };
 
 export type DashboardMetrics = {

@@ -3,6 +3,7 @@ import UpdateUsername from "./UpdateUsername";
 import UpdatePassword from "./UpdatePassword";
 import { getUserbyId } from "@/db/queries";
 import UpdateEmail from "./UpdateEmail";
+import ToggleNotifications from "./ToggleNotifications";
 
 export default async function Settings() {
   const session = await getSession();
@@ -23,6 +24,10 @@ export default async function Settings() {
         <div className={`bg-white p-8 rounded-lg flex flex-col gap-6 min-w-80`}>
           <b>Contact Info</b>
           <UpdateEmail email={user?.email} userID={user?.id} />
+          <ToggleNotifications
+            emailNotifications={user?.email_notifications}
+            userID={user?.id}
+          />
         </div>
       </div>
     </section>
