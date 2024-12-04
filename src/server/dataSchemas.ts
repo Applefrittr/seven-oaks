@@ -14,7 +14,7 @@ export const loginSchema = z.object({
 export const surveySchema = z.object({
   code: z.string().min(5, { message: "Please enter valid survey code" }).trim(),
   name: z.string().min(1, { message: "Enter party name" }).trim(),
-  date: z.date(),
+  date: z.coerce.date(),
   length: z.string().min(1, { message: "Enter length of stay" }).trim(),
   diet: z.string().trim(),
   other: z.string().trim(),

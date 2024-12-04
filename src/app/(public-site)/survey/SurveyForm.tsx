@@ -12,14 +12,14 @@ type Errors = {
   name?: string[] | undefined;
 };
 
-export default function SurveyForm() {
+export default function SurveyForm({ host }: { host: string | null }) {
   const [active, setActive] = useState<boolean>(true);
   const [errors, setErrors] = useState<Errors | null>(null);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const surveyState = await submitSurvey(formData);
+    const surveyState = await submitSurvey(formData, host);
 
     console.log(surveyState);
 
@@ -29,10 +29,6 @@ export default function SurveyForm() {
       setErrors(null);
       setActive(false);
     }
-
-    // if (loginState?.errors) {
-    //   setErrors(loginState.errors);
-    // }
   };
 
   return (

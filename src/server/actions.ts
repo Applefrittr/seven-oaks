@@ -25,6 +25,7 @@ import {
 } from "./dataSchemas";
 import { revalidatePath } from "next/cache";
 import { SurveyData } from "@/db/dataTypes";
+import { newSurveyEmail } from "@/lib/nodemailer/mailFunctions";
 
 export async function login(formData: FormData) {
   const result = loginSchema.safeParse(Object.fromEntries(formData));
@@ -129,7 +130,7 @@ export async function createCode() {
   revalidatePath("/dashboard/codes");
 }
 
-export async function submitSurvey(formData: FormData) {
+export async function submitSurvey(formData: FormData, host: string | null) {
   const result = surveySchema.safeParse(Object.fromEntries(formData));
   console.log(formData);
 
@@ -148,6 +149,12 @@ export async function submitSurvey(formData: FormData) {
       errors: { code: ["Survey code does not exits, please try again"] },
     };
   }
+
+  if (host)
+    await newSurveyEmail(
+      `${host}/dashboard/surveys/${result.data.code}`,
+      `${result.data.name} Party submitted a new Survey!`
+    );
 
   revalidatePath("/dashboard");
 }

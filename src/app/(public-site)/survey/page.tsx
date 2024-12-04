@@ -1,8 +1,15 @@
 import Logo from "../../../../public/SO-logo.png";
 import { dancingScript } from "../../fonts";
 import SurveyForm from "./SurveyForm";
+import { headers } from "next/headers";
 
-export default function Survey() {
+export default async function Survey() {
+  const header = await headers();
+  // const host = header.get("host");
+  // const proto = header.get("x-forwarded-proto");
+
+  const hostUrl = `${header.get("x-forwarded-proto") || "http"}//${header.get("host")}`;
+
   return (
     <main className="flex p-4 justify-center items-center flex-auto relative z-10 bg-cover bg-no-repeat bg-[url('/close-front-stencil.jpg')] h-svh overflow-hidden">
       <div className="absolute top-0 bottom-0 left-0 right-0 -z-10 bg-[rgba(255,255,255,0.25)]" />
@@ -21,7 +28,7 @@ export default function Survey() {
             to all our patrons. Please fill out the form below in prepration to
             your visit.
           </p>
-          <SurveyForm />
+          <SurveyForm host={hostUrl} />
         </div>
       </div>
     </main>
