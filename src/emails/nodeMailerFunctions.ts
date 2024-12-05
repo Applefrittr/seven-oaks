@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import NewSurvey from "./templates/NewSurvey";
+import NewSurveyEmail from "./templates/NewSurveyEmail";
 import { render } from "@react-email/components";
 
 const transporter = nodemailer.createTransport({
@@ -12,11 +12,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const newSurveyEmail = async (link: string, partyName: string) => {
+export const newSurveyEmail = async (
+  code: string,
+  partyName: string,
+  adminEmail: string
+) => {
   try {
-    const html = await render(NewSurvey({ link }));
+    const html = await render(NewSurveyEmail({ code, partyName }));
     await transporter.sendMail({
-      to: "jacob.lee.jordan@gmail.com",
+      from: `Seven Oaks <${process.env.GMAIL_USER}>`,
+      to: adminEmail,
       subject: `${partyName} Submitted a New Survey - Seven Oaks`,
       text: "Hello World",
       html: html,

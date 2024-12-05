@@ -12,14 +12,14 @@ type Errors = {
   name?: string[] | undefined;
 };
 
-export default function SurveyForm({ host }: { host: string | null }) {
+export default function SurveyForm() {
   const [active, setActive] = useState<boolean>(true);
   const [errors, setErrors] = useState<Errors | null>(null);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const surveyState = await submitSurvey(formData, host);
+    const surveyState = await submitSurvey(formData);
 
     console.log(surveyState);
 

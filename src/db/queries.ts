@@ -87,18 +87,6 @@ export async function updateNotifications(
   }
 }
 
-export async function getUser(username: string): Promise<User | undefined> {
-  try {
-    const { rows } = await pool.query(
-      `SELECT * FROM users WHERE username = $1`,
-      [username]
-    );
-    return rows[0];
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 export async function getUserbyId(id: string): Promise<User | undefined> {
   try {
     const { rows } = await pool.query(`SELECT * FROM users WHERE id = $1`, [
@@ -111,6 +99,28 @@ export async function getUserbyId(id: string): Promise<User | undefined> {
   }
 }
 
+export async function getUserPass(username: string): Promise<User | undefined> {
+  try {
+    const { rows } = await pool.query(
+      `SELECT password FROM users WHERE username = $1`,
+      [username]
+    );
+    return rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getAdminNotifications(): Promise<User | undefined> {
+  try {
+    const { rows } = await pool.query(
+      `SELECT email, email_notifications FROM users WHERE admin = true`
+    );
+    return rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
 export async function getCodes() {
   try {
     const { rows } = await pool.query(`SELECT * FROM guest`);

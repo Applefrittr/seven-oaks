@@ -5,7 +5,7 @@ import {
   getAllSurveys,
   getPastSurveys,
   getUpcomingSurveys,
-  getUser,
+  getUserPass,
   updateUsername,
   updatePassword,
   updateEmail,
@@ -13,6 +13,7 @@ import {
   createNewCode,
   createSurvey,
   getUserbyId,
+  getAdminNotifications,
 } from "@/db/queries";
 import { createSession, deleteSession } from "@/server/session";
 import { redirect } from "next/navigation";
@@ -37,7 +38,7 @@ export async function login(formData: FormData) {
   }
   const { username, password } = result.data;
 
-  const user = await getUser(username);
+  const user = await getUserPass(username);
 
   if (!user || (user && password !== user.password)) {
     return {
@@ -130,7 +131,7 @@ export async function createCode() {
   revalidatePath("/dashboard/codes");
 }
 
-export async function submitSurvey(formData: FormData, host: string | null) {
+export async function submitSurvey(formData: FormData) {
   const result = surveySchema.safeParse(Object.fromEntries(formData));
   console.log(formData);
 
@@ -142,18 +143,19 @@ export async function submitSurvey(formData: FormData, host: string | null) {
 
   const queryResult = await createSurvey(result.data);
 
-  console.log({ queryResult });
-
   if (queryResult?.length === 0) {
     return {
       errors: { code: ["Survey code does not exits, please try again"] },
     };
   }
 
-  if (host)
+  const notifications = await getAdminNotifications();
+
+  if (notifications?.email && notifications?.email_notifications)
     await newSurveyEmail(
-      `${host}/dashboard/surveys/${result.data.code}`,
-      result.data.name
+      result.data.code,
+      result.data.name,
+      notifications.email
     );
 
   revalidatePath("/dashboard");

@@ -12,7 +12,19 @@ import {
   Button,
 } from "@react-email/components";
 
-export default function NewSurvey({ link }: { link: string }) {
+type NewSurveyEmailProps = {
+  code: string;
+  partyName: string;
+};
+
+export default function NewSurveyEmail({
+  code,
+  partyName,
+}: NewSurveyEmailProps) {
+  const baseUrl = process.env.HOST_URL ? `https://${process.env.HOST_URL}` : ``;
+
+  console.log(baseUrl);
+
   return (
     <Html>
       <Head />
@@ -24,7 +36,7 @@ export default function NewSurvey({ link }: { link: string }) {
             >
               <Section className={`text-center`}>
                 <Img
-                  src={`/SO-logo.png`}
+                  src={`${baseUrl}/SO-logo.png`}
                   alt="Seven Oaks Logo"
                   className={`w-20 h-auto mx-auto`}
                 />
@@ -32,7 +44,7 @@ export default function NewSurvey({ link }: { link: string }) {
               </Section>
               <Hr />
               <Text>
-                The <strong>Applefrittr</strong> Party has submitted a new
+                The <strong>{partyName}</strong> Party has submitted a new
                 survey.
               </Text>
               <Text>
@@ -42,7 +54,7 @@ export default function NewSurvey({ link }: { link: string }) {
               <Section className={`text-center`}>
                 <Button
                   className={`px-4 py-2 rounded-md bg-slate-400 text-white text-center`}
-                  href={link}
+                  href={`${baseUrl}/dashboard/surveys/${code}`}
                 >
                   Go To Dashboard
                 </Button>
