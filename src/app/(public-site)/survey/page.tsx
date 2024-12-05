@@ -5,10 +5,8 @@ import { headers } from "next/headers";
 
 export default async function Survey() {
   const header = await headers();
-  // const host = header.get("host");
-  // const proto = header.get("x-forwarded-proto");
 
-  const hostUrl = `${header.get("x-forwarded-proto") || "http"}//${header.get("host")}`;
+  const hostUrl = `${header.get("x-forwarded-proto") || "http"}://${header.get("host")}`;
 
   return (
     <main className="flex p-4 justify-center items-center flex-auto relative z-10 bg-cover bg-no-repeat bg-[url('/close-front-stencil.jpg')] h-svh overflow-hidden">

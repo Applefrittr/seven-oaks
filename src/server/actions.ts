@@ -25,7 +25,7 @@ import {
 } from "./dataSchemas";
 import { revalidatePath } from "next/cache";
 import { SurveyData } from "@/db/dataTypes";
-import { newSurveyEmail } from "@/lib/nodemailer/mailFunctions";
+import { newSurveyEmail } from "@/emails/nodeMailerFunctions";
 
 export async function login(formData: FormData) {
   const result = loginSchema.safeParse(Object.fromEntries(formData));
@@ -153,7 +153,7 @@ export async function submitSurvey(formData: FormData, host: string | null) {
   if (host)
     await newSurveyEmail(
       `${host}/dashboard/surveys/${result.data.code}`,
-      `${result.data.name} Party submitted a new Survey!`
+      result.data.name
     );
 
   revalidatePath("/dashboard");
