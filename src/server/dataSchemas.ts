@@ -49,3 +49,5 @@ export const emailSchema = z.object({
   email: z.string().email({ message: "Enter a valid email" }),
   id: z.string().trim(),
 });
+
+export const emailONLYSchema = emailSchema.omit({ id: true });

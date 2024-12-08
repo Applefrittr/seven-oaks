@@ -23,10 +23,14 @@ import {
   usernameSchema,
   passwordSchema,
   emailSchema,
+  emailONLYSchema,
 } from "./dataSchemas";
 import { revalidatePath } from "next/cache";
 import { SurveyData } from "@/db/dataTypes";
-import { newSurveyEmail } from "@/emails/nodeMailerFunctions";
+import {
+  confirmationEmail,
+  newSurveyEmail,
+} from "@/emails/nodeMailerFunctions";
 
 export async function login(formData: FormData) {
   const result = loginSchema.safeParse(Object.fromEntries(formData));
@@ -152,11 +156,7 @@ export async function submitSurvey(formData: FormData) {
   const notifications = await getAdminNotifications();
 
   if (notifications?.email && notifications?.email_notifications)
-    await newSurveyEmail(
-      result.data.code,
-      result.data.name,
-      notifications.email
-    );
+    newSurveyEmail(result.data.code, result.data.name, notifications.email);
 
   revalidatePath("/dashboard");
 }
@@ -171,7 +171,6 @@ export async function sortSurveys(
 }
 
 export async function removeSurvey(code: string) {
-  console.log(code, " to be deleted");
   await deleteSurvey(code);
   redirect("/dashboard/surveys");
 }
@@ -185,4 +184,20 @@ export async function toggleNotifications(
   else column = "text_notifications";
 
   await updateNotifications(id, column);
+}
+
+export async function sendEmailConfirmation(
+  surveyData: SurveyData,
+  formData: FormData
+) {
+  const result = emailONLYSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    return {
+      errors: result.error.flatten().fieldErrors,
+    };
+  }
+  const { email } = result.data;
+
+  await confirmationEmail(surveyData, email);
 }

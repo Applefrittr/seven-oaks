@@ -23,8 +23,6 @@ export default function NewSurveyEmail({
 }: NewSurveyEmailProps) {
   const baseUrl = process.env.HOST_URL ? `https://${process.env.HOST_URL}` : ``;
 
-  console.log(baseUrl);
-
   return (
     <Html>
       <Head />
@@ -32,13 +30,13 @@ export default function NewSurveyEmail({
         <Body className={`bg-white font-sans`}>
           <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto px-[20px] pt-[20px] max-w-[465px]">
             <Section
-              className={`flex flex-col gap-4 items-center justify-center p-4`}
+              className={`flex flex-col gap-[16px] items-center justify-center p-[16px]`}
             >
               <Section className={`text-center`}>
                 <Img
                   src={`${baseUrl}/SO-logo.png`}
                   alt="Seven Oaks Logo"
-                  className={`w-20 h-auto mx-auto`}
+                  className={`w-[80px] h-auto mx-auto`}
                 />
                 <Heading as="h2">New Survey Recieved</Heading>
               </Section>
