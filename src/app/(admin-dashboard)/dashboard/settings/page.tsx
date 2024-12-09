@@ -11,7 +11,7 @@ export default async function Settings() {
   const user = await getUserbyId(userID);
 
   return (
-    <section className={`flex-auto flex flex-col gap-6 w-max`}>
+    <section className={`flex-auto flex flex-col gap-6 min-h-full`}>
       <h1 className="font-extrabold text-xl">Settings</h1>
       <b>
         Current User: <i>{user?.username}</i>

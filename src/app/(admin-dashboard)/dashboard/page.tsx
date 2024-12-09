@@ -10,41 +10,41 @@ export default async function Dashboard() {
   return (
     <section className={`flex-auto flex flex-col gap-6 min-h-full`}>
       <h1 className="font-extrabold text-xl">Dashboard</h1>
-      <div className="flex gap-6">
-        <DashboardContainer>
+      {/* <div className="flex gap-6"> */}
+      <div className="flex gap-6 flex-wrap justify-end">
+        <DashboardContainer header={"Total Upcoming Reservations (30 days)"}>
+          <DashboardData>
+            <b>{metrics?.surveys30}</b>
+          </DashboardData>
+        </DashboardContainer>
+        <DashboardContainer header={"Total Reservations"}>
+          <DashboardData>
+            <b>{metrics?.surveysTotal}</b>
+          </DashboardData>
+        </DashboardContainer>
+        <DashboardContainer header={"Overall Beverage Peference"}>
+          <DashboardData>
+            <b>{metrics?.beveragePref}</b>
+          </DashboardData>
+        </DashboardContainer>
+        <DashboardContainer header={"Current Reservation(s)"}>
+          <CurrentSurveys currentSurveys={metrics?.currentSurveys} />
+        </DashboardContainer>
+        <DashboardContainer header={"Next Reservation"}>
+          <DashboardData>
+            {metrics?.nextSurvey && <NextSurvey {...metrics.nextSurvey} />}
+            {!metrics?.nextSurvey && <b>NONE</b>}
+          </DashboardData>
+        </DashboardContainer>
+      </div>
+      {/* </div> */}
+      <div className={`flex-auto gap-4 flex flex-wrap lg:flex-nowrap`}>
+        <DashboardContainer customStyle={`max-w-max`}>
           <Calendar />
         </DashboardContainer>
-        <div className="flex gap-6 flex-wrap justify-end">
-          <DashboardContainer header={"Total Upcoming Reservations (30 days)"}>
-            <DashboardData>
-              <b>{metrics?.surveys30}</b>
-            </DashboardData>
-          </DashboardContainer>
-          <DashboardContainer header={"Total Reservations"}>
-            <DashboardData>
-              <b>{metrics?.surveysTotal}</b>
-            </DashboardData>
-          </DashboardContainer>
-          <DashboardContainer header={"Overall Beverage Peference"}>
-            <DashboardData>
-              <b>{metrics?.beveragePref}</b>
-            </DashboardData>
-          </DashboardContainer>
-          <DashboardContainer header={"Current Reservation(s)"}>
-            <CurrentSurveys currentSurveys={metrics?.currentSurveys} />
-          </DashboardContainer>
-          <DashboardContainer header={"Next Reservation"}>
-            <DashboardData>
-              {metrics?.nextSurvey && <NextSurvey {...metrics.nextSurvey} />}
-              {!metrics?.nextSurvey && <b>NONE</b>}
-            </DashboardData>
-          </DashboardContainer>
-        </div>
-      </div>
-      <div className={`flex-auto flex-col flex`}>
         <DashboardContainer
           header={"Upcoming Reservations"}
-          customStyle={`h-full`}
+          customStyle={`w-full`}
         >
           <UpcomingSurveys upcomingSurveys={metrics?.upcomingSurveys} />
         </DashboardContainer>
@@ -66,7 +66,7 @@ function DashboardContainer({
 }: DashboardContainerProps) {
   return (
     <div
-      className={`flex-auto bg-white rounded-lg flex flex-col justify-between gap-8 max-h-max p-8 ${customStyle}`}
+      className={`flex-auto bg-white rounded-lg flex flex-col justify-between gap-8 max-h-max p-4 sm:p-8 ${customStyle}`}
     >
       {header && (
         <h2>
@@ -143,11 +143,11 @@ type UpcomingSurveyProps = {
 function UpcomingSurveys({ upcomingSurveys }: UpcomingSurveyProps) {
   return (
     <section className={`flex-auto flex flex-col gap-6`}>
-      <div className="grid grid-cols-[3fr_1fr_1fr_1fr] gap-4">
+      <div className="grid grid-cols-[1fr_1fr_1fr] gap-4 sm:grid-cols-[3fr_1fr_1fr_1fr]">
         <div className={`col-span-full grid grid-cols-subgrid`}>
           <b>Party Name</b>
           <b>Arrival Date</b>
-          <b>Length of Stay</b>
+          <b className={`sm:block hidden`}>Length of Stay</b>
           <b>Survey Code</b>
         </div>
         {upcomingSurveys &&
@@ -161,7 +161,7 @@ function UpcomingSurveys({ upcomingSurveys }: UpcomingSurveyProps) {
               >
                 <b>{survey.name ?? "null"}</b>
                 <p>{dateToString(survey.date)}</p>
-                <p>{survey.length} days</p>
+                <p className={`sm:block hidden`}>{survey.length} days</p>
                 <i>{survey.code}</i>
               </Link>
             );

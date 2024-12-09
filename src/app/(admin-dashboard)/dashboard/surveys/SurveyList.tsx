@@ -41,17 +41,11 @@ export default function SurveyList({ data }: SurveyListProps) {
       </div>
       <div className={`flex gap-4 items-center`}>
         <b>Current View:</b>
-        {/* <button
-          onClick={toggleView}
-          className={`px-4 py-1 rounded-md bg-slate-500 w-max text-white`}
-        >
-          {view}
-        </button> */}
         <form action={toggleView}>
           <DashboardButton>{view}</DashboardButton>
         </form>
       </div>
-      <div className="grid grid-cols-[3fr_1fr_1fr_1fr] gap-4">
+      <div className="grid grid-cols-[1fr_1fr_1fr_1fr] gap-4 sm:grid-cols-[3fr_1fr_1fr_1fr]">
         <div className={`col-span-full grid grid-cols-subgrid`}>
           <b>Party Name</b>
           <b>Arrival Date</b>
