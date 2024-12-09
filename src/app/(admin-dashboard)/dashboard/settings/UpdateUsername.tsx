@@ -39,12 +39,7 @@ export default function UpdateUsername({
   };
 
   return (
-    <form
-      onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
-        handleSubmit(event)
-      }
-      className={`flex flex-col gap-2`}
-    >
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-2`}>
       <label htmlFor="username">
         <b>Change Username</b>
       </label>

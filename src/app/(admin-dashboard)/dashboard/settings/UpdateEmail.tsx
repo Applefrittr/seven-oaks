@@ -39,12 +39,7 @@ export default function UpdateEmail({ email, userID }: UpdateEmailProps) {
     }
   };
   return (
-    <form
-      onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
-        handleSubmit(event)
-      }
-      className={`flex flex-col gap-2`}
-    >
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-2`}>
       <label htmlFor="email">
         <i>Update Email</i>
       </label>

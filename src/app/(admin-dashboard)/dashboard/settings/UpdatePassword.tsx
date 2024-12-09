@@ -41,12 +41,7 @@ export default function UpdatePassword({
   };
 
   return (
-    <form
-      onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
-        handleSubmit(event)
-      }
-      className={`flex flex-col gap-2`}
-    >
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-2`}>
       <legend>
         <b>Change Password</b>
       </legend>

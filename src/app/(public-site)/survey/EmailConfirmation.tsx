@@ -43,10 +43,7 @@ export default function EmailConfirmation({
         Thank you for taking the time to complete the visitors survey. If you
         would like a confirmation email, please enter it below.
       </p>
-      <form
-        className={`flex gap-2`}
-        onSubmit={(event: React.FormEvent<HTMLFormElement>) => onSubmit(event)}
-      >
+      <form className={`flex gap-2`} onSubmit={onSubmit}>
         <input
           name="email"
           id="email"
