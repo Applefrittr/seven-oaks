@@ -25,7 +25,7 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={(event: React.FormEvent<HTMLFormElement>) => onSubmit(event)}
-      className={`p-6 rounded-2xl bg-black text-white flex flex-col gap-6`}
+      className={`m-4 p-6 rounded-2xl bg-black text-white flex flex-col gap-6`}
     >
       <legend className={`text-center text-2xl`}>Admin Portal</legend>
       <FormElement>

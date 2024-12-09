@@ -102,7 +102,7 @@ export async function getUserbyId(id: string): Promise<User | undefined> {
 export async function getUserPass(username: string): Promise<User | undefined> {
   try {
     const { rows } = await pool.query(
-      `SELECT password FROM users WHERE username = $1`,
+      `SELECT id, password FROM users WHERE username = $1`,
       [username]
     );
     return rows[0];
