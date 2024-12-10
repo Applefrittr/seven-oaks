@@ -9,13 +9,15 @@ export async function createUser({
   password,
   email = null,
   phone = null,
+  email_notifications = false,
+  admin = true,
 }: User) {
   try {
     await pool.query(
-      `INSERT INTO users (username, password, email, phone)
-              VALUES ($1, $2, $3, $4)
+      `INSERT INTO users (username, password, email, phone, email_notifications, admin)
+              VALUES ($1, $2, $3, $4, $5, $6)
           `,
-      [username, password, email, phone]
+      [username, password, email, phone, email_notifications, admin]
     );
   } catch (err) {
     console.log(err);

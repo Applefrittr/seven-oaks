@@ -21,6 +21,7 @@ export type User = {
   email?: string | null;
   phone?: number | null;
   email_notifications: boolean | null;
+  admin: boolean;
 };
 
 export type DashboardMetrics = {

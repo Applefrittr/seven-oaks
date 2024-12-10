@@ -14,6 +14,7 @@ import {
   createSurvey,
   getUserbyId,
   getAdminNotifications,
+  createUser,
 } from "@/db/queries";
 import { createSession, deleteSession } from "@/server/session";
 import { redirect } from "next/navigation";
@@ -26,7 +27,7 @@ import {
   emailONLYSchema,
 } from "./dataSchemas";
 import { revalidatePath } from "next/cache";
-import { SurveyData } from "@/db/dataTypes";
+import { SurveyData, User } from "@/db/dataTypes";
 import {
   confirmationEmail,
   newSurveyEmail,
@@ -115,7 +116,6 @@ export async function changePassword(formData: FormData) {
   }
 
   hash(newPass, 10, async (err, hashedPass) => {
-    console.log("hashing...");
     if (err) throw new Error("Password hash operation failed");
     else await updatePassword(id, hashedPass);
   });
@@ -214,4 +214,18 @@ export async function sendEmailConfirmation(
   const { email } = result.data;
 
   await confirmationEmail(surveyData, email);
+}
+
+export async function newUser(formData: FormData) {
+  const user = Object.fromEntries(formData) as unknown as User;
+
+  hash(user.password, 10, async (err, hashedPass) => {
+    if (err) throw new Error("Password hash operation failed");
+    else {
+      user.password = hashedPass;
+      await createUser(user);
+    }
+  });
+
+  redirect("/login");
 }
