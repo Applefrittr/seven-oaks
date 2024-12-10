@@ -24,7 +24,6 @@ export async function createUser({
 
 export async function updateUsername(id: string, nw: string) {
   try {
-    console.log(nw, id);
     await pool.query(
       `
       UPDATE users
@@ -73,7 +72,6 @@ export async function updateNotifications(
   column: string
 ) {
   try {
-    console.log({ column, id });
     await pool.query(
       `
       UPDATE users
