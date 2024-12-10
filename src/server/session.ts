@@ -13,6 +13,7 @@ export async function createSession(userId: string) {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
+    sameSite: "none",
   });
 }
 
