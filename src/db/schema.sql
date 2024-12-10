@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   username VARCHAR ( 50 ),
-  password VARCHAR ( 50 ),
+  password VARCHAR ( 254 ),
   email VARCHAR ( 254 ),
   phone VARCHAR ( 10 ),
   email_notifications BOOLEAN,

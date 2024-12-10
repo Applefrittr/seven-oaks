@@ -31,26 +31,36 @@ import {
   confirmationEmail,
   newSurveyEmail,
 } from "@/emails/nodeMailerFunctions";
+import { hash, compare } from "bcryptjs";
 
 export async function login(formData: FormData) {
-  const result = loginSchema.safeParse(Object.fromEntries(formData));
+  try {
+    const result = loginSchema.safeParse(Object.fromEntries(formData));
 
-  if (!result.success) {
-    return {
-      errors: result.error.flatten().fieldErrors,
-    };
+    if (!result.success) {
+      return {
+        errors: result.error.flatten().fieldErrors,
+      };
+    }
+    const { username, password } = result.data;
+
+    const user = await getUserPass(username);
+
+    if (!user)
+      return { errors: { username: ["Invalid username or password"] } };
+    else {
+      compare(password, user.password, async (err, result) => {
+        if (err) throw new Error("Password hash operation failed");
+        else if (!result)
+          return {
+            errors: { username: ["Invalid username or password"] },
+          };
+        else await createSession(user.id);
+      });
+    }
+  } catch (err) {
+    console.log(err);
   }
-  const { username, password } = result.data;
-
-  const user = await getUserPass(username);
-
-  if (!user || (user && password !== user.password)) {
-    return {
-      errors: { username: ["Invalid username or password"] },
-    };
-  }
-
-  await createSession(user.id);
 
   redirect("/dashboard");
 }
@@ -104,7 +114,11 @@ export async function changePassword(formData: FormData) {
     };
   }
 
-  await updatePassword(id, newPass);
+  hash(newPass, 10, async (err, hashedPass) => {
+    console.log("hashing...");
+    if (err) throw new Error("Password hash operation failed");
+    else await updatePassword(id, hashedPass);
+  });
 
   return {
     success: { password: ["Password successfully updated"] },
