@@ -10,11 +10,9 @@ export default async function Survey({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
-  const { name, date, length, beverage, diet, other, code } = (await getSurvey(
-    id
-  )) as SurveyData;
-  if (!code) notFound();
-
+  const survey = (await getSurvey(id)) as SurveyData;
+  if (!survey) notFound();
+  const { name, date, length, beverage, diet, other, code } = survey;
   const stringDate = dateToString(date);
 
   return (
