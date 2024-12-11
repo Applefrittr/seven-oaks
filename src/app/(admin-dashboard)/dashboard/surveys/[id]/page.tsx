@@ -22,12 +22,10 @@ export default async function Survey({
       <h1 className={`font-extrabold text-xl`}>
         Survey - <i>{id}</i>
       </h1>
-      <div
-        className={`p-4 rounded-md bg-white w-max max-w-lg flex flex-col gap-4`}
-      >
+      <div className={`p-4 rounded-md bg-white max-w-lg flex flex-col gap-4`}>
         <b>{name}</b>
         <hr className={`border-1 border-black`} />
-        <div className={`flex gap-4`}>
+        <div className={`flex gap-4 flex-wrap sm:flex-nowrap`}>
           <p>
             <i>Arrives:</i> <b>{stringDate}</b>
           </p>

@@ -163,8 +163,9 @@ export async function submitSurvey(formData: FormData) {
 
   const notifications = await getAdminNotifications();
 
-  if (notifications?.email && notifications?.email_notifications)
+  if (notifications?.email && notifications?.email_notifications) {
     newSurveyEmail(result.data.code, result.data.name, notifications.email);
+  }
 
   revalidatePath("/dashboard");
 }
