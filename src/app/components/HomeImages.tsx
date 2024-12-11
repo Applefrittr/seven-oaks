@@ -25,7 +25,7 @@ export default function HomeImages() {
   }, []);
 
   return (
-    <section>
+    <section className={`relative h-svh`}>
       {imgArray.map((img, i) => (
         <Fragment key={i}>
           <HeroImg

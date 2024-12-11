@@ -3,7 +3,7 @@ import HomeImages from "../components/HomeImages";
 
 export default function Home() {
   return (
-    <section>
+    <section className={`h-svh`}>
       <div className="absolute w-96 sm:w-[500px] h-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 opacity-75">
         <Image
           src="/SO-logo.png"
