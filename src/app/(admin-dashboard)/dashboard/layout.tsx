@@ -7,7 +7,7 @@ export default function Layout({
 }>) {
   return (
     <div
-      className={`flex justify-center items-center flex-auto h-full relative`}
+      className={`flex justify-center items-center flex-auto h-full relative text-black`}
     >
       <DashboardNav />
       <main
