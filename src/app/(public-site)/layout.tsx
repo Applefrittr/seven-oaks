@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     url: process.env.HOST_URL,
     siteName: "Seven Oaks",
     images: {
-      url: `${process.env.HOST_URL}SO-logo.png`,
+      url: `SO-logo.png`,
       width: 800,
       height: 525,
       alt: "Seven Oaks Logo",
