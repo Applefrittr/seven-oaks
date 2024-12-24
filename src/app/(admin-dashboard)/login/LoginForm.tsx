@@ -33,6 +33,7 @@ export default function LoginForm() {
         <input
           id="username"
           name="username"
+          onChange={() => setErrors(null)}
           className="text-black rounded p-1"
         />
       </FormElement>
@@ -43,6 +44,7 @@ export default function LoginForm() {
           id="password"
           name="password"
           type="password"
+          onChange={() => setErrors(null)}
           className="text-black rounded p-1"
         />
       </FormElement>

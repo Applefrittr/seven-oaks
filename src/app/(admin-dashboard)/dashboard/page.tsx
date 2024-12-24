@@ -3,6 +3,8 @@ import { SurveyData } from "@/db/dataTypes";
 import { getDashboardMetrics } from "@/db/queries";
 import Link from "next/link";
 import dateToString from "@/lib/dateToString";
+import CurrentSurveys from "./CurrentSurveys";
+import NextSurvey from "./NextSurvey";
 
 export default async function Dashboard() {
   const metrics = await getDashboardMetrics();
@@ -82,59 +84,59 @@ function DashboardData({ children }: { children: React.ReactNode }) {
   return <div className={`text-3xl flex justify-end`}>{children}</div>;
 }
 
-type CurrentSurveyProps = {
-  currentSurveys: SurveyData[] | undefined;
-};
+// type CurrentSurveyProps = {
+//   currentSurveys: SurveyData[] | undefined;
+// };
 
-function CurrentSurveys({ currentSurveys }: CurrentSurveyProps) {
-  return (
-    <div className={`flex flex-col gap-2 items-end`}>
-      {currentSurveys &&
-        currentSurveys.length > 0 &&
-        currentSurveys.map((survey) => {
-          const today = new Date().setHours(0, 0, 0, 0);
-          const leavingDate = new Date(survey.date);
-          leavingDate.setDate(leavingDate.getDate() + Number(survey.length));
+// function CurrentSurveys({ currentSurveys }: CurrentSurveyProps) {
+//   return (
+//     <div className={`flex flex-col gap-2 items-end`}>
+//       {currentSurveys &&
+//         currentSurveys.length > 0 &&
+//         currentSurveys.map((survey) => {
+//           const today = new Date().setHours(0, 0, 0, 0);
+//           const leavingDate = new Date(survey.date);
+//           leavingDate.setDate(leavingDate.getDate() + Number(survey.length));
 
-          const daysLeft =
-            (leavingDate.getTime() - today) / (24 * 60 * 60 * 1000);
+//           const daysLeft =
+//             (leavingDate.getTime() - today) / (24 * 60 * 60 * 1000);
 
-          return (
-            <Link
-              key={survey.code}
-              className={`text-base p-4 bg-slate-100 rounded-md flex gap-4 w-max hover:bg-slate-400`}
-              href={`/dashboard/surveys/${survey.code}`}
-            >
-              <b>{survey.name}</b>
-              <p>
-                Remaining Days: <b>{daysLeft}</b>
-              </p>
-              <i>{survey.code}</i>
-            </Link>
-          );
-        })}
-      {currentSurveys && currentSurveys.length === 0 && <b>NONE</b>}
-    </div>
-  );
-}
+//           return (
+//             <Link
+//               key={survey.code}
+//               className={`text-base p-4 bg-slate-100 rounded-md flex gap-4 w-max hover:bg-slate-400`}
+//               href={`/dashboard/surveys/${survey.code}`}
+//             >
+//               <b>{survey.name}</b>
+//               <p>
+//                 Remaining Days: <b>{daysLeft}</b>
+//               </p>
+//               <i>{survey.code}</i>
+//             </Link>
+//           );
+//         })}
+//       {currentSurveys && currentSurveys.length === 0 && <b>NONE</b>}
+//     </div>
+//   );
+// }
 
-function NextSurvey({ code, name, date }: SurveyData) {
-  const today = new Date().setHours(0, 0, 0, 0);
-  const daysUntilArrival = (date.getTime() - today) / (24 * 60 * 60 * 1000);
+// function NextSurvey({ code, name, date }: SurveyData) {
+//   const today = new Date().setHours(0, 0, 0, 0);
+//   const daysUntilArrival = (date.getTime() - today) / (24 * 60 * 60 * 1000);
 
-  return (
-    <Link
-      className={`text-base p-4 bg-slate-100 rounded-md flex gap-4 w-max hover:bg-slate-400`}
-      href={`/dashboard/surveys/${code}`}
-    >
-      <b>{name}</b>
-      <p>
-        Days Until Arrival: <b>{daysUntilArrival}</b>
-      </p>
-      <i>{code}</i>
-    </Link>
-  );
-}
+//   return (
+//     <Link
+//       className={`text-base p-4 bg-slate-100 rounded-md flex gap-4 w-max hover:bg-slate-400`}
+//       href={`/dashboard/surveys/${code}`}
+//     >
+//       <b>{name}</b>
+//       <p>
+//         Days Until Arrival: <b>{daysUntilArrival}</b>
+//       </p>
+//       <i>{code}</i>
+//     </Link>
+//   );
+// }
 
 type UpcomingSurveyProps = {
   upcomingSurveys: SurveyData[] | undefined;
