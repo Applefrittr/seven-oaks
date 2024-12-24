@@ -17,8 +17,9 @@ export default function CurrentSurveys({ currentSurveys }: CurrentSurveyProps) {
           const leavingDate = new Date(survey.date);
           leavingDate.setDate(leavingDate.getDate() + Number(survey.length));
 
-          const daysLeft =
-            (leavingDate.getTime() - today) / (24 * 60 * 60 * 1000);
+          const daysLeft = Math.floor(
+            (leavingDate.getTime() - today) / (24 * 60 * 60 * 1000)
+          );
 
           return (
             <Link

@@ -5,7 +5,9 @@ import Link from "next/link";
 
 export default function NextSurvey({ code, name, date }: SurveyData) {
   const today = new Date().setHours(0, 0, 0, 0);
-  const daysUntilArrival = (date.getTime() - today) / (24 * 60 * 60 * 1000);
+  const daysUntilArrival = Math.floor(
+    (date.getTime() - today) / (24 * 60 * 60 * 1000)
+  );
 
   return (
     <Link
