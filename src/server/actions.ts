@@ -181,6 +181,8 @@ export async function sortSurveys(
 
 export async function removeSurvey(code: string) {
   await deleteSurvey(code);
+
+  revalidatePath("/dashboard");
   redirect("/dashboard/surveys");
 }
 
