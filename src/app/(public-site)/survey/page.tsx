@@ -6,7 +6,7 @@ export default async function Survey() {
   return (
     <main className="flex p-4 justify-center items-center flex-auto relative z-10 bg-cover bg-no-repeat bg-[url('/close-front-stencil.jpg')] h-svh overflow-hidden">
       <div className="absolute top-0 bottom-0 left-0 right-0 -z-10 bg-[rgba(255,255,255,0.25)]" />
-      <div className="flex flex-col h-[95%]  overflow-y-scroll scrollbar-hidden">
+      <div className="flex flex-col h-[95%]  overflow-y-scroll scrollbar">
         <div className="flex justify-center items-center p-8 bg-white">
           <img src={Logo.src} alt="Seven Oak Logo" className="w-56 h-auto" />
         </div>

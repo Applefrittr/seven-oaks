@@ -22,8 +22,8 @@ body {
   scrollbar-width: thin;
 }
 
-@utility scrollbar-hidden {
-  &::-webkit-scrollbar {
-    display: none;
+@layer utilities {
+  .scrollbar {
+    scrollbar-width: none;
   }
 }
