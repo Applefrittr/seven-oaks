@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <main className="flex flex-col flex-auto overflow-scroll">
+    <main className="flex flex-col flex-auto">
       <div className="p-10 sm:p-20 bg-[url('/right-pan-front-stencil.jpg')] bg-cover bg-center flex">
         <aside className="p-4 bg-[rgba(250,250,250,0.85)] max-w-96 text-black">
           About Seven Oaks
