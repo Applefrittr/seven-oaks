@@ -21,3 +21,9 @@ body {
   overflow-x: hidden;
   scrollbar-width: thin;
 }
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    scrollbar-width: thin;
+  }
+}
