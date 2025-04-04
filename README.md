@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Seven Oaks
 
-## Getting Started
+Client facing site w/ protected admin dashboard catered to bed and breakfast/Airbnb short term rental businesses.
 
-First, run the development server:
+Live Link - https://seven-oaks.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![seven-oaks-demo](https://github.com/user-attachments/assets/605f10b5-ee59-48bc-a7b5-79135c0484f7)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Description
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**`DISCLAIMER`**: demo site - sample for prospective clients. Not intended for commercial use.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Seven oaks was designed for a bed and breakfast style business as an all-in-one informational site where customers can submit reservations to stay. Features a built out admin dashboard where the owner/admin can manage existing reservations and generate codes for new customer reservations. Email confirmations are sent to admin/owner as well as customers can opt to have a confirmation sent to their own inbox.
 
-## Learn More
+## Technology
 
-To learn more about Next.js, take a look at the following resources:
+- Typescript
+- Next.js
+- PostgreSQL - Neon
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For full dependency list, check - https://github.com/Applefrittr/seven-oaks/blob/main/package.json
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Author
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Applefrittr - created April 2025

@@ -2,6 +2,7 @@
 
 import { login } from "@/server/actions";
 import FormElement from "./FormElement";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 import { useState } from "react";
 
 type Errors = {
@@ -11,12 +12,15 @@ type Errors = {
 
 export default function LoginForm() {
   const [errors, setErrors] = useState<Errors | null>(null);
+  const [pending, setPending] = useState<boolean>(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setPending(true);
     const formData = new FormData(e.currentTarget);
     const loginState = await login(formData);
 
+    setPending(false);
     if (loginState?.errors) {
       setErrors(loginState.errors);
     }
@@ -53,7 +57,7 @@ export default function LoginForm() {
         type="submit"
         className={`px-4 py-1 rounded-md bg-slate-500 w-max`}
       >
-        Sign In
+        {!pending ? "Sign In" : <LoadingSpinner text={"Logging In..."} />}
       </button>
     </form>
   );

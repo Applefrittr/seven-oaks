@@ -16,18 +16,18 @@ export default function About() {
       <div className="h-fit bg-[#87BBA2] text-white flex gap-6 flex-wrap p-9 justify-evenly">
         <div className="text-center">
           <h2 className="text-black font-extrabold p-2">Address</h2>
-          <p>196 Fuselier Rd</p>
-          <p>Arnaudville LA 70512</p>
+          <p>123 Main St</p>
+          <p>Somewhere US 55555</p>
         </div>
         <div className="text-center">
           <h2 className="text-black font-extrabold p-2">Wifi</h2>
           <p>Network: Sevenoaks</p>
-          <p>Password:loft52318</p>
+          <p>Password:*********</p>
         </div>
         <div className="text-center">
           <h2 className="text-black font-extrabold p-2">Parking</h2>
           <p>Located on the side of</p>
-          <p>the house on Olive St.</p>
+          <p>the house on Side St.</p>
         </div>
         <div className="text-center">
           <h2 className="text-black font-extrabold p-2">Ameneties</h2>

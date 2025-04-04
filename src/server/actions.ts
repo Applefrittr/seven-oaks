@@ -55,7 +55,7 @@ export async function login(formData: FormData) {
         errors: { username: ["Invalid username or password"] },
       };
     await createSession(user.id);
-
+    revalidatePath("/dashboard");
     redirect("/dashboard");
   }
 }
