@@ -4,6 +4,8 @@ Client facing site w/ protected admin dashboard catered to bed and breakfast/Air
 
 Live Link - https://seven-oaks.vercel.app/
 
+![seven-oaks-demo](https://github.com/user-attachments/assets/605f10b5-ee59-48bc-a7b5-79135c0484f7)
+
 ## Description
 
 **`DISCLAIMER`**: demo site - sample for prospective clients. Not intended for commercial use.
